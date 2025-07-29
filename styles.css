@@ -25,7 +25,11 @@ body {
     -moz-osx-font-smoothing: grayscale;
     touch-action: manipulation;
     overscroll-behavior: none;
-    position: fixed;
+    
+    /* iOS scrollbar fixes */
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    position: relative;
     width: 100%;
 }
 
@@ -39,6 +43,33 @@ body {
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    
+    /* Force scrollbar visibility on iOS */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
+}
+
+/* Webkit scrollbar styling for iOS Safari */
+#app::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+}
+
+#app::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+}
+
+#app::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.3);
+    border-radius: 4px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+}
+
+#app::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.5);
 }
 
 /* Header */
@@ -206,15 +237,130 @@ body {
 /* Main content */
 .main-content {
     padding: 1.5rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: calc(100vh - 140px); /* Account for header and nav */
+}
+
+/* Scrollable content areas */
+.modal-body,
+.custom-modal-body,
+.party-list,
+.initiative-order,
+.manual-roll-inputs {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
+}
+
+/* Webkit scrollbar for all scrollable areas */
+.main-content::-webkit-scrollbar,
+.modal-body::-webkit-scrollbar,
+.custom-modal-body::-webkit-scrollbar,
+.party-list::-webkit-scrollbar,
+.initiative-order::-webkit-scrollbar,
+.manual-roll-inputs::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+}
+
+.main-content::-webkit-scrollbar-track,
+.modal-body::-webkit-scrollbar-track,
+.custom-modal-body::-webkit-scrollbar-track,
+.party-list::-webkit-scrollbar-track,
+.initiative-order::-webkit-scrollbar-track,
+.manual-roll-inputs::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb,
+.modal-body::-webkit-scrollbar-thumb,
+.custom-modal-body::-webkit-scrollbar-thumb,
+.party-list::-webkit-scrollbar-thumb,
+.initiative-order::-webkit-scrollbar-thumb,
+.manual-roll-inputs::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.4);
+    border-radius: 4px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover,
+.modal-body::-webkit-scrollbar-thumb:hover,
+.custom-modal-body::-webkit-scrollbar-thumb:hover,
+.party-list::-webkit-scrollbar-thumb:hover,
+.initiative-order::-webkit-scrollbar-thumb:hover,
+.manual-roll-inputs::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.6);
 }
 
 /* Tab Content */
 .tab-content {
     display: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: calc(100vh - 200px); /* Account for header, nav, and footer */
 }
 
 .tab-content.active {
     display: block;
+}
+
+/* Scroll indicator for overflowing content */
+.scroll-indicator {
+    position: relative;
+}
+
+.scroll-indicator::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(transparent, rgba(100, 116, 139, 0.1));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.scroll-indicator.has-scroll::after {
+    opacity: 1;
+}
+
+/* About and Settings pages specific scrolling */
+.about-container,
+.settings-container {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 0.5rem; /* Space for scrollbar */
+}
+
+.about-container::-webkit-scrollbar,
+.settings-container::-webkit-scrollbar {
+    width: 8px;
+    background: rgba(248, 250, 252, 0.8);
+}
+
+.about-container::-webkit-scrollbar-thumb,
+.settings-container::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.5);
+    border-radius: 4px;
+    border: 1px solid rgba(248, 250, 252, 0.8);
+}
+
+/* Dark theme for about/settings scrollbars */
+body.dark-theme .about-container::-webkit-scrollbar,
+body.dark-theme .settings-container::-webkit-scrollbar {
+    background: rgba(45, 55, 72, 0.8);
+}
+
+body.dark-theme .about-container::-webkit-scrollbar-thumb,
+body.dark-theme .settings-container::-webkit-scrollbar-thumb {
+    background: rgba(226, 232, 240, 0.4);
+    border: 1px solid rgba(45, 55, 72, 0.8);
 }
 
 /* Section Headers */
@@ -1758,6 +1904,151 @@ body.dark-theme .initiative-options {
     }
 }
 
+/* Dark theme scrollbars */
+body.dark-theme #app {
+    scrollbar-color: rgba(226, 232, 240, 0.4) rgba(45, 55, 72, 0.8);
+}
+
+body.dark-theme #app::-webkit-scrollbar {
+    background: rgba(45, 55, 72, 0.8);
+}
+
+body.dark-theme #app::-webkit-scrollbar-thumb {
+    background: rgba(226, 232, 240, 0.4);
+    border: 2px solid rgba(45, 55, 72, 0.8);
+}
+
+body.dark-theme #app::-webkit-scrollbar-thumb:hover {
+    background: rgba(226, 232, 240, 0.6);
+}
+
+body.dark-theme .main-content::-webkit-scrollbar,
+body.dark-theme .modal-body::-webkit-scrollbar,
+body.dark-theme .custom-modal-body::-webkit-scrollbar,
+body.dark-theme .party-list::-webkit-scrollbar,
+body.dark-theme .initiative-order::-webkit-scrollbar,
+body.dark-theme .manual-roll-inputs::-webkit-scrollbar {
+    background: rgba(45, 55, 72, 0.8);
+}
+
+body.dark-theme .main-content::-webkit-scrollbar-thumb,
+body.dark-theme .modal-body::-webkit-scrollbar-thumb,
+body.dark-theme .custom-modal-body::-webkit-scrollbar-thumb,
+body.dark-theme .party-list::-webkit-scrollbar-thumb,
+body.dark-theme .initiative-order::-webkit-scrollbar-thumb,
+body.dark-theme .manual-roll-inputs::-webkit-scrollbar-thumb {
+    background: rgba(226, 232, 240, 0.4);
+    border: 2px solid rgba(45, 55, 72, 0.8);
+}
+
+/* iOS-specific scrollbar enhancements */
+.ios-device {
+    scrollbar-width: auto !important;
+    scrollbar-color: rgba(100, 116, 139, 0.7) rgba(248, 250, 252, 0.9) !important;
+}
+
+.ios-device::-webkit-scrollbar {
+    width: 14px !important;
+    background: rgba(248, 250, 252, 0.9) !important;
+    border-radius: 7px;
+}
+
+.ios-device::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.7) !important;
+    border-radius: 7px;
+    border: 2px solid rgba(248, 250, 252, 0.9) !important;
+    background-clip: content-box;
+}
+
+.ios-device::-webkit-scrollbar-thumb:active {
+    background: rgba(100, 116, 139, 0.9) !important;
+}
+
+/* iOS dark theme scrollbars */
+body.dark-theme .ios-device {
+    scrollbar-color: rgba(226, 232, 240, 0.7) rgba(45, 55, 72, 0.9) !important;
+}
+
+body.dark-theme .ios-device::-webkit-scrollbar {
+    background: rgba(45, 55, 72, 0.9) !important;
+}
+
+body.dark-theme .ios-device::-webkit-scrollbar-thumb {
+    background: rgba(226, 232, 240, 0.7) !important;
+    border: 2px solid rgba(45, 55, 72, 0.9) !important;
+}
+
+body.dark-theme .ios-device::-webkit-scrollbar-thumb:active {
+    background: rgba(226, 232, 240, 0.9) !important;
+}
+
+/* Scroll indicator styling */
+.scroll-indicator {
+    position: relative;
+}
+
+.scroll-indicator::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(transparent, rgba(100, 116, 139, 0.1));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.scroll-indicator.has-scroll::after {
+    opacity: 1;
+}
+
+body.dark-theme .scroll-indicator::after {
+    background: linear-gradient(transparent, rgba(226, 232, 240, 0.1));
+}
+
+/* Mobile dark theme scrollbars */
+@media (max-width: 768px) {
+    body.dark-theme #app::-webkit-scrollbar {
+        background: rgba(45, 55, 72, 0.9);
+    }
+    
+    body.dark-theme #app::-webkit-scrollbar-thumb {
+        background: rgba(226, 232, 240, 0.5);
+        border: 2px solid rgba(45, 55, 72, 0.9);
+    }
+    
+    body.dark-theme #app::-webkit-scrollbar-thumb:active {
+        background: rgba(226, 232, 240, 0.7);
+    }
+    
+    /* iOS-specific mobile enhancements */
+    .ios-device {
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    .ios-device::-webkit-scrollbar {
+        width: 16px !important;
+        background: rgba(248, 250, 252, 0.95) !important;
+    }
+    
+    .ios-device::-webkit-scrollbar-thumb {
+        background: rgba(100, 116, 139, 0.8) !important;
+        border: 3px solid rgba(248, 250, 252, 0.95) !important;
+    }
+    
+    body.dark-theme .ios-device::-webkit-scrollbar {
+        background: rgba(45, 55, 72, 0.95) !important;
+    }
+    
+    body.dark-theme .ios-device::-webkit-scrollbar-thumb {
+        background: rgba(226, 232, 240, 0.8) !important;
+        border: 3px solid rgba(45, 55, 72, 0.95) !important;
+    }
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     /* Enhanced mobile viewport */
@@ -1771,16 +2062,65 @@ body.dark-theme .initiative-options {
         -moz-osx-font-smoothing: grayscale;
         touch-action: manipulation;
         overscroll-behavior: none;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
     }
     
     #app {
         min-height: 100vh;
         min-height: -webkit-fill-available;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        
+        /* Always show scrollbar on mobile */
+        scrollbar-width: auto;
+        scrollbar-color: rgba(100, 116, 139, 0.5) rgba(248, 250, 252, 0.5);
+    }
+    
+    /* More visible scrollbars on mobile */
+    #app::-webkit-scrollbar {
+        width: 12px;
+        background: rgba(248, 250, 252, 0.8);
+    }
+    
+    #app::-webkit-scrollbar-thumb {
+        background: rgba(100, 116, 139, 0.6);
+        border-radius: 6px;
+        border: 2px solid rgba(248, 250, 252, 0.8);
+    }
+    
+    #app::-webkit-scrollbar-thumb:active {
+        background: rgba(100, 116, 139, 0.8);
     }
     
     .main-content {
         padding: 1rem;
         padding-bottom: env(safe-area-inset-bottom, 1rem);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        max-height: none; /* Remove height restriction on mobile */
+    }
+    
+    /* Enhanced scrollbars for all scrollable content on mobile */
+    .main-content::-webkit-scrollbar,
+    .modal-body::-webkit-scrollbar,
+    .custom-modal-body::-webkit-scrollbar,
+    .party-list::-webkit-scrollbar,
+    .initiative-order::-webkit-scrollbar,
+    .manual-roll-inputs::-webkit-scrollbar {
+        width: 12px;
+        background: rgba(248, 250, 252, 0.8);
+    }
+    
+    .main-content::-webkit-scrollbar-thumb,
+    .modal-body::-webkit-scrollbar-thumb,
+    .custom-modal-body::-webkit-scrollbar-thumb,
+    .party-list::-webkit-scrollbar-thumb,
+    .initiative-order::-webkit-scrollbar-thumb,
+    .manual-roll-inputs::-webkit-scrollbar-thumb {
+        background: rgba(100, 116, 139, 0.6);
+        border-radius: 6px;
+        border: 2px solid rgba(248, 250, 252, 0.8);
     }
     
     .app-header {

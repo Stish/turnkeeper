@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupBurgerMenu();
     setupThemeToggle();
     setupSettings();
+    setupScrollIndicators();
     renderParties();
     populatePartySelect();
     checkOnlineStatus();
@@ -1144,6 +1145,76 @@ function setupSettings() {
                 }
             );
         });
+    }
+}
+
+// Setup scroll indicators for better iOS UX
+function setupScrollIndicators() {
+    console.log('Setting up scroll indicators for iOS...');
+    
+    // Force scrollbar visibility on iOS by ensuring proper CSS
+    function ensureScrollbarVisibility() {
+        const app = document.getElementById('app');
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        
+        if (app && isIOS) {
+            // Add iOS-specific class for enhanced scrollbar styling
+            app.classList.add('ios-device');
+            
+            // Temporarily scroll to show scrollbar
+            const currentScroll = app.scrollTop;
+            app.scrollTop = currentScroll + 1;
+            setTimeout(() => {
+                app.scrollTop = currentScroll;
+            }, 10);
+        }
+    }
+    
+    // Check scrollable content and add indicators
+    function checkScrollableContent() {
+        const scrollableElements = document.querySelectorAll('.main-content, .tab-content, .about-container, .settings-container, .modal-body, .party-list, .initiative-order');
+        
+        scrollableElements.forEach(element => {
+            if (element.scrollHeight > element.clientHeight) {
+                element.classList.add('scroll-indicator');
+                if (element.scrollTop + element.clientHeight < element.scrollHeight - 10) {
+                    element.classList.add('has-scroll');
+                } else {
+                    element.classList.remove('has-scroll');
+                }
+            } else {
+                element.classList.remove('scroll-indicator', 'has-scroll');
+            }
+        });
+    }
+    
+    // Ensure scrollbars are visible when switching tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            setTimeout(() => {
+                ensureScrollbarVisibility();
+                checkScrollableContent();
+            }, 100);
+        });
+    });
+    
+    // Initial setup
+    ensureScrollbarVisibility();
+    checkScrollableContent();
+    
+    // Recheck on resize
+    window.addEventListener('resize', () => {
+        setTimeout(checkScrollableContent, 100);
+    });
+    
+    // Recheck when content changes
+    const observer = new MutationObserver(() => {
+        setTimeout(checkScrollableContent, 100);
+    });
+    
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+        observer.observe(mainContent, { childList: true, subtree: true });
     }
 }
 
