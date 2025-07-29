@@ -79,6 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
     checkOnlineStatus();
     updateStartButtonText();
     
+    // Ensure parties tab is always the default on load
+    switchTab('parties');
+    
     // Restore combat state if exists
     if (currentCombat) {
         showCombatTab();
@@ -783,9 +786,10 @@ function showCombatTracker() {
 function renderInitiativeOrder() {
     if (!currentCombat) return;
     
-    currentRound.textContent = currentCombat.round;
+    // Update round and turn info if elements exist
+    if (currentRound) currentRound.textContent = currentCombat.round;
     const currentParticipant = currentCombat.participants[currentCombat.currentTurnIndex];
-    currentTurn.textContent = currentParticipant ? currentParticipant.name : '-';
+    if (currentTurn) currentTurn.textContent = currentParticipant ? currentParticipant.name : '-';
     
     initiativeOrder.innerHTML = currentCombat.participants.map((participant, index) => `
         <div class="initiative-item ${index === currentCombat.currentTurnIndex ? 'current-turn' : ''}" 
