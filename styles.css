@@ -305,14 +305,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.5rem;
 }
 
 .section-header h2 {
     color: #333;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     margin: 0;
 }
@@ -576,17 +576,18 @@ body {
 }
 
 .char-name {
-    flex: 2;
+    flex: 4;
     padding: 0.5rem;
     border: 2px solid #e0e0e0;
     border-radius: 6px;
 }
 
 .char-init {
-    flex: 1;
+    flex: 0 0 60px;
     padding: 0.5rem;
     border: 2px solid #e0e0e0;
     border-radius: 6px;
+    text-align: center;
 }
 
 .remove-char-btn {
@@ -793,21 +794,23 @@ body {
 .round-info {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
-    padding: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
     background: #f8f9fa;
     border-radius: 8px;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .list-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #333;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.list-header .primary-btn {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    margin: 0;
 }
 
 .initiative-order {
@@ -820,7 +823,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 0.75rem;
     background: #f8f9fa;
     border-radius: 8px;
     border-left: 4px solid #e0e0e0;
@@ -951,8 +954,17 @@ body {
 /* Combat Controls */
 .combat-controls {
     display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.combat-controls .primary-btn,
+.combat-controls .danger-btn {
+    flex: 1;
+    min-width: 0;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
 }
 
 /* Initiative Options */
@@ -2145,7 +2157,7 @@ body.dark-theme .scroll-indicator::after {
     }
     
     .char-name {
-        flex: 2;
+        flex: 4;
         min-width: 0; /* Allow text truncation */
     }
     
@@ -2219,17 +2231,17 @@ body.dark-theme .scroll-indicator::after {
         justify-content: space-between;
         align-items: center;
         gap: 0.5rem;
-        padding: 0.75rem;
-        font-size: 1rem;
+        padding: 0.5rem;
+        font-size: 0.9rem;
     }
     
     .list-header {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .list-header .primary-btn {
+        padding: 0.6rem;
+        font-size: 0.9rem;
     }
     
     .initiative-item {
