@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Scrolling Test - TurnKeeper</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            overflow: auto;
+            height: 100%;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            
+            /* Force scrollbars to be visible */
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: auto;
+            scrollbar-color: rgba(100, 116, 139, 0.5) rgba(248, 250, 252, 0.5);
+        }
+        
+        .container::-webkit-scrollbar {
+            width: 14px;
+            background: rgba(248, 250, 252, 0.8);
+        }
+        
+        .container::-webkit-scrollbar-thumb {
+            background: rgba(100, 116, 139, 0.6);
+            border-radius: 7px;
+            border: 2px solid rgba(248, 250, 252, 0.8);
+        }
+        
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #64748b;
+        }
+        
+        .tall-content {
+            height: 3000px;
+            background: linear-gradient(to bottom, 
+                rgba(255,0,0,0.1) 0%, 
+                rgba(255,255,0,0.1) 25%, 
+                rgba(0,255,0,0.1) 50%, 
+                rgba(0,255,255,0.1) 75%, 
+                rgba(0,0,255,0.1) 100%);
+            padding: 20px;
+            position: relative;
+        }
+        
+        .marker {
+            position: absolute;
+            left: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .btn {
+            background: #64748b;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        .btn:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Scrolling Test Page</h1>
+        
+        <div class="test-section">
+            <h2>Scrolling Test Instructions</h2>
+            <p><strong>This page tests if scrolling works properly on your device.</strong></p>
+            <ul>
+                <li>✅ You should see a vertical scrollbar</li>
+                <li>✅ You should be able to scroll down to see more content</li>
+                <li>✅ The scrollbar should be visible and functional</li>
+                <li>✅ Touch scrolling should work smoothly on mobile</li>
+            </ul>
+            
+            <button class="btn" onclick="scrollToBottom()">Scroll to Bottom</button>
+            <button class="btn" onclick="scrollToTop()">Scroll to Top</button>
+            <button class="btn" onclick="backToMain()">Back to TurnKeeper</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>Device Info</h2>
+            <p><strong>User Agent:</strong> <span id="userAgent"></span></p>
+            <p><strong>Screen Size:</strong> <span id="screenSize"></span></p>
+            <p><strong>Viewport Size:</strong> <span id="viewportSize"></span></p>
+            <p><strong>Is iOS:</strong> <span id="isIOS"></span></p>
+        </div>
+        
+        <div class="tall-content">
+            <div class="marker" style="top: 20px;">📍 START - This is the beginning of the scrollable content</div>
+            <div class="marker" style="top: 500px;">📍 25% - You are 25% through the content</div>
+            <div class="marker" style="top: 1000px;">📍 50% - You are halfway through the content</div>
+            <div class="marker" style="top: 1500px;">📍 75% - You are 75% through the content</div>
+            <div class="marker" style="top: 2000px;">📍 ALMOST THERE - Nearly at the bottom</div>
+            <div class="marker" style="bottom: 20px;">🎯 END - You reached the bottom! Scrolling works!</div>
+        </div>
+        
+        <div class="test-section">
+            <h2>✅ Scrolling Test Complete</h2>
+            <p>If you can see this section, scrolling is working correctly!</p>
+            <button class="btn" onclick="backToMain()">Return to TurnKeeper</button>
+        </div>
+    </div>
+
+    <script>
+        // Display device info
+        document.getElementById('userAgent').textContent = navigator.userAgent;
+        document.getElementById('screenSize').textContent = `${screen.width} x ${screen.height}`;
+        document.getElementById('viewportSize').textContent = `${window.innerWidth} x ${window.innerHeight}`;
+        document.getElementById('isIOS').textContent = /iPad|iPhone|iPod/.test(navigator.userAgent) ? 'Yes' : 'No';
+        
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+        
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function backToMain() {
+            window.location.href = 'index.html';
+        }
+        
+        // Log scroll events
+        let scrollCount = 0;
+        window.addEventListener('scroll', () => {
+            scrollCount++;
+            console.log(`Scroll event #${scrollCount}: scrollY = ${window.scrollY}`);
+        });
+        
+        console.log('Scrolling test page loaded');
+        console.log('Document height:', document.body.scrollHeight);
+        console.log('Window height:', window.innerHeight);
+        console.log('Can scroll:', document.body.scrollHeight > window.innerHeight);
+    </script>
+</body>
+</html>

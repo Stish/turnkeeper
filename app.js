@@ -1152,6 +1152,22 @@ function setupSettings() {
 function setupScrollIndicators() {
     console.log('Setting up scroll indicators for iOS...');
     
+    // Debug function to check scrolling
+    function debugScrolling() {
+        const app = document.getElementById('app');
+        const mainContent = document.querySelector('.main-content');
+        
+        console.log('App element:', app);
+        console.log('App scrollHeight:', app?.scrollHeight);
+        console.log('App clientHeight:', app?.clientHeight);
+        console.log('App can scroll:', app?.scrollHeight > app?.clientHeight);
+        
+        console.log('Main content:', mainContent);
+        console.log('Main content scrollHeight:', mainContent?.scrollHeight);
+        console.log('Main content clientHeight:', mainContent?.clientHeight);
+        console.log('Main content can scroll:', mainContent?.scrollHeight > mainContent?.clientHeight);
+    }
+    
     // Force scrollbar visibility on iOS by ensuring proper CSS
     function ensureScrollbarVisibility() {
         const app = document.getElementById('app');
@@ -1160,6 +1176,7 @@ function setupScrollIndicators() {
         if (app && isIOS) {
             // Add iOS-specific class for enhanced scrollbar styling
             app.classList.add('ios-device');
+            console.log('iOS device detected, applying special styling');
             
             // Temporarily scroll to show scrollbar
             const currentScroll = app.scrollTop;
@@ -1168,6 +1185,9 @@ function setupScrollIndicators() {
                 app.scrollTop = currentScroll;
             }, 10);
         }
+        
+        // Debug scrolling
+        debugScrolling();
     }
     
     // Check scrollable content and add indicators

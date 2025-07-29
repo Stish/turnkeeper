@@ -7,8 +7,6 @@
 
 /* Mobile-first PWA optimizations */
 html {
-    height: 100%;
-    height: -webkit-fill-available;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
 }
@@ -17,59 +15,32 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     line-height: 1.6;
     color: #374151;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
+    background: white;
     margin: 0;
+    padding: 2rem 1rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     touch-action: manipulation;
-    overscroll-behavior: none;
-    
-    /* iOS scrollbar fixes */
-    -webkit-overflow-scrolling: touch;
-    overflow-y: auto;
-    position: relative;
-    width: 100%;
 }
 
 #app {
     max-width: 800px;
     margin: 0 auto;
     background: white;
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
     position: relative;
-    overflow-x: hidden;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
     
-    /* Force scrollbar visibility on iOS */
-    scrollbar-width: thin;
-    scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
+    /* Hide scrollbars but keep scrolling */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
 
-/* Webkit scrollbar styling for iOS Safari */
+/* Hide webkit scrollbars */
 #app::-webkit-scrollbar {
-    width: 8px;
+    display: none;
+    width: 0;
     background: transparent;
-}
-
-#app::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 4px;
-}
-
-#app::-webkit-scrollbar-thumb {
-    background: rgba(100, 116, 139, 0.3);
-    border-radius: 4px;
-    border: 1px solid transparent;
-    background-clip: content-box;
-}
-
-#app::-webkit-scrollbar-thumb:hover {
-    background: rgba(100, 116, 139, 0.5);
 }
 
 /* Header */
@@ -81,6 +52,7 @@ body {
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 12px 12px 0 0;
 }
 
 .app-header h1 {
@@ -239,7 +211,6 @@ body {
     padding: 1.5rem;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    max-height: calc(100vh - 140px); /* Account for header and nav */
 }
 
 /* Scrollable content areas */
@@ -249,50 +220,21 @@ body {
 .initiative-order,
 .manual-roll-inputs {
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(100, 116, 139, 0.3) transparent;
+    /* Hide scrollbars but keep functionality */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-/* Webkit scrollbar for all scrollable areas */
+/* Hide webkit scrollbars for all scrollable areas */
 .main-content::-webkit-scrollbar,
 .modal-body::-webkit-scrollbar,
 .custom-modal-body::-webkit-scrollbar,
 .party-list::-webkit-scrollbar,
 .initiative-order::-webkit-scrollbar,
 .manual-roll-inputs::-webkit-scrollbar {
-    width: 8px;
+    display: none;
+    width: 0;
     background: transparent;
-}
-
-.main-content::-webkit-scrollbar-track,
-.modal-body::-webkit-scrollbar-track,
-.custom-modal-body::-webkit-scrollbar-track,
-.party-list::-webkit-scrollbar-track,
-.initiative-order::-webkit-scrollbar-track,
-.manual-roll-inputs::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 4px;
-}
-
-.main-content::-webkit-scrollbar-thumb,
-.modal-body::-webkit-scrollbar-thumb,
-.custom-modal-body::-webkit-scrollbar-thumb,
-.party-list::-webkit-scrollbar-thumb,
-.initiative-order::-webkit-scrollbar-thumb,
-.manual-roll-inputs::-webkit-scrollbar-thumb {
-    background: rgba(100, 116, 139, 0.4);
-    border-radius: 4px;
-    border: 1px solid transparent;
-    background-clip: content-box;
-}
-
-.main-content::-webkit-scrollbar-thumb:hover,
-.modal-body::-webkit-scrollbar-thumb:hover,
-.custom-modal-body::-webkit-scrollbar-thumb:hover,
-.party-list::-webkit-scrollbar-thumb:hover,
-.initiative-order::-webkit-scrollbar-thumb:hover,
-.manual-roll-inputs::-webkit-scrollbar-thumb:hover {
-    background: rgba(100, 116, 139, 0.6);
 }
 
 /* Tab Content */
@@ -300,7 +242,6 @@ body {
     display: none;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    max-height: calc(100vh - 200px); /* Account for header, nav, and footer */
 }
 
 .tab-content.active {
@@ -332,35 +273,19 @@ body {
 /* About and Settings pages specific scrolling */
 .about-container,
 .settings-container {
-    max-height: calc(100vh - 200px);
+    /* Remove height restrictions to allow natural scrolling */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding-right: 0.5rem; /* Space for scrollbar */
+    /* Hide scrollbars */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .about-container::-webkit-scrollbar,
 .settings-container::-webkit-scrollbar {
-    width: 8px;
-    background: rgba(248, 250, 252, 0.8);
-}
-
-.about-container::-webkit-scrollbar-thumb,
-.settings-container::-webkit-scrollbar-thumb {
-    background: rgba(100, 116, 139, 0.5);
-    border-radius: 4px;
-    border: 1px solid rgba(248, 250, 252, 0.8);
-}
-
-/* Dark theme for about/settings scrollbars */
-body.dark-theme .about-container::-webkit-scrollbar,
-body.dark-theme .settings-container::-webkit-scrollbar {
-    background: rgba(45, 55, 72, 0.8);
-}
-
-body.dark-theme .about-container::-webkit-scrollbar-thumb,
-body.dark-theme .settings-container::-webkit-scrollbar-thumb {
-    background: rgba(226, 232, 240, 0.4);
-    border: 1px solid rgba(45, 55, 72, 0.8);
+    display: none;
+    width: 0;
+    background: transparent;
 }
 
 /* Section Headers */
@@ -1904,22 +1829,16 @@ body.dark-theme .initiative-options {
     }
 }
 
-/* Dark theme scrollbars */
+/* Dark theme scrollbars - hidden but maintain functionality */
 body.dark-theme #app {
-    scrollbar-color: rgba(226, 232, 240, 0.4) rgba(45, 55, 72, 0.8);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 body.dark-theme #app::-webkit-scrollbar {
-    background: rgba(45, 55, 72, 0.8);
-}
-
-body.dark-theme #app::-webkit-scrollbar-thumb {
-    background: rgba(226, 232, 240, 0.4);
-    border: 2px solid rgba(45, 55, 72, 0.8);
-}
-
-body.dark-theme #app::-webkit-scrollbar-thumb:hover {
-    background: rgba(226, 232, 240, 0.6);
+    display: none;
+    width: 0;
+    background: transparent;
 }
 
 body.dark-theme .main-content::-webkit-scrollbar,
@@ -1928,58 +1847,33 @@ body.dark-theme .custom-modal-body::-webkit-scrollbar,
 body.dark-theme .party-list::-webkit-scrollbar,
 body.dark-theme .initiative-order::-webkit-scrollbar,
 body.dark-theme .manual-roll-inputs::-webkit-scrollbar {
-    background: rgba(45, 55, 72, 0.8);
+    display: none;
+    width: 0;
+    background: transparent;
 }
 
-body.dark-theme .main-content::-webkit-scrollbar-thumb,
-body.dark-theme .modal-body::-webkit-scrollbar-thumb,
-body.dark-theme .custom-modal-body::-webkit-scrollbar-thumb,
-body.dark-theme .party-list::-webkit-scrollbar-thumb,
-body.dark-theme .initiative-order::-webkit-scrollbar-thumb,
-body.dark-theme .manual-roll-inputs::-webkit-scrollbar-thumb {
-    background: rgba(226, 232, 240, 0.4);
-    border: 2px solid rgba(45, 55, 72, 0.8);
-}
-
-/* iOS-specific scrollbar enhancements */
+/* iOS-specific scrollbar enhancements - Hidden but functional */
 .ios-device {
-    scrollbar-width: auto !important;
-    scrollbar-color: rgba(100, 116, 139, 0.7) rgba(248, 250, 252, 0.9) !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
 }
 
 .ios-device::-webkit-scrollbar {
-    width: 14px !important;
-    background: rgba(248, 250, 252, 0.9) !important;
-    border-radius: 7px;
+    display: none !important;
+    width: 0 !important;
+    background: transparent !important;
 }
 
-.ios-device::-webkit-scrollbar-thumb {
-    background: rgba(100, 116, 139, 0.7) !important;
-    border-radius: 7px;
-    border: 2px solid rgba(248, 250, 252, 0.9) !important;
-    background-clip: content-box;
-}
-
-.ios-device::-webkit-scrollbar-thumb:active {
-    background: rgba(100, 116, 139, 0.9) !important;
-}
-
-/* iOS dark theme scrollbars */
+/* Dark theme iOS scrollbars - also hidden */
 body.dark-theme .ios-device {
-    scrollbar-color: rgba(226, 232, 240, 0.7) rgba(45, 55, 72, 0.9) !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
 }
 
 body.dark-theme .ios-device::-webkit-scrollbar {
-    background: rgba(45, 55, 72, 0.9) !important;
-}
-
-body.dark-theme .ios-device::-webkit-scrollbar-thumb {
-    background: rgba(226, 232, 240, 0.7) !important;
-    border: 2px solid rgba(45, 55, 72, 0.9) !important;
-}
-
-body.dark-theme .ios-device::-webkit-scrollbar-thumb:active {
-    background: rgba(226, 232, 240, 0.9) !important;
+    display: none !important;
+    width: 0 !important;
+    background: transparent !important;
 }
 
 /* Scroll indicator styling */
@@ -2009,43 +1903,25 @@ body.dark-theme .scroll-indicator::after {
     background: linear-gradient(transparent, rgba(226, 232, 240, 0.1));
 }
 
-/* Mobile dark theme scrollbars */
+/* Mobile scrollbars - hidden but functional */
 @media (max-width: 768px) {
-    body.dark-theme #app::-webkit-scrollbar {
-        background: rgba(45, 55, 72, 0.9);
-    }
-    
-    body.dark-theme #app::-webkit-scrollbar-thumb {
-        background: rgba(226, 232, 240, 0.5);
-        border: 2px solid rgba(45, 55, 72, 0.9);
-    }
-    
-    body.dark-theme #app::-webkit-scrollbar-thumb:active {
-        background: rgba(226, 232, 240, 0.7);
-    }
-    
-    /* iOS-specific mobile enhancements */
+    /* iOS-specific mobile enhancements - scrolling works but bars are hidden */
     .ios-device {
         -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
     }
     
     .ios-device::-webkit-scrollbar {
-        width: 16px !important;
-        background: rgba(248, 250, 252, 0.95) !important;
-    }
-    
-    .ios-device::-webkit-scrollbar-thumb {
-        background: rgba(100, 116, 139, 0.8) !important;
-        border: 3px solid rgba(248, 250, 252, 0.95) !important;
+        display: none !important;
+        width: 0 !important;
+        background: transparent !important;
     }
     
     body.dark-theme .ios-device::-webkit-scrollbar {
-        background: rgba(45, 55, 72, 0.95) !important;
-    }
-    
-    body.dark-theme .ios-device::-webkit-scrollbar-thumb {
-        background: rgba(226, 232, 240, 0.8) !important;
-        border: 3px solid rgba(45, 55, 72, 0.95) !important;
+        display: none !important;
+        width: 0 !important;
+        background: transparent !important;
     }
 }
 
@@ -2061,9 +1937,10 @@ body.dark-theme .scroll-indicator::after {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         touch-action: manipulation;
-        overscroll-behavior: none;
         -webkit-overflow-scrolling: touch;
-        position: relative;
+        /* Fix mobile scrolling */
+        overflow: auto;
+        height: 100%;
     }
     
     #app {
@@ -2071,26 +1948,20 @@ body.dark-theme .scroll-indicator::after {
         min-height: -webkit-fill-available;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        /* Ensure proper mobile height */
+        height: 100vh;
+        height: -webkit-fill-available;
         
-        /* Always show scrollbar on mobile */
-        scrollbar-width: auto;
-        scrollbar-color: rgba(100, 116, 139, 0.5) rgba(248, 250, 252, 0.5);
+        /* Hide scrollbars on mobile too */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
     }
     
-    /* More visible scrollbars on mobile */
+    /* Hide mobile scrollbars */
     #app::-webkit-scrollbar {
-        width: 12px;
-        background: rgba(248, 250, 252, 0.8);
-    }
-    
-    #app::-webkit-scrollbar-thumb {
-        background: rgba(100, 116, 139, 0.6);
-        border-radius: 6px;
-        border: 2px solid rgba(248, 250, 252, 0.8);
-    }
-    
-    #app::-webkit-scrollbar-thumb:active {
-        background: rgba(100, 116, 139, 0.8);
+        display: none;
+        width: 0;
+        background: transparent;
     }
     
     .main-content {
@@ -2098,7 +1969,9 @@ body.dark-theme .scroll-indicator::after {
         padding-bottom: env(safe-area-inset-bottom, 1rem);
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        max-height: none; /* Remove height restriction on mobile */
+        /* Remove height restrictions on mobile */
+        flex: 1;
+        min-height: 0;
     }
     
     /* Enhanced scrollbars for all scrollable content on mobile */
@@ -2108,19 +1981,9 @@ body.dark-theme .scroll-indicator::after {
     .party-list::-webkit-scrollbar,
     .initiative-order::-webkit-scrollbar,
     .manual-roll-inputs::-webkit-scrollbar {
-        width: 12px;
-        background: rgba(248, 250, 252, 0.8);
-    }
-    
-    .main-content::-webkit-scrollbar-thumb,
-    .modal-body::-webkit-scrollbar-thumb,
-    .custom-modal-body::-webkit-scrollbar-thumb,
-    .party-list::-webkit-scrollbar-thumb,
-    .initiative-order::-webkit-scrollbar-thumb,
-    .manual-roll-inputs::-webkit-scrollbar-thumb {
-        background: rgba(100, 116, 139, 0.6);
-        border-radius: 6px;
-        border: 2px solid rgba(248, 250, 252, 0.8);
+        display: none;
+        width: 0;
+        background: transparent;
     }
     
     .app-header {
