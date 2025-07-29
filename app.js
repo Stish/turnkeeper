@@ -786,10 +786,10 @@ function showCombatTracker() {
 function renderInitiativeOrder() {
     if (!currentCombat) return;
     
-    // Update round and turn info if elements exist
-    if (currentRound) currentRound.textContent = currentCombat.round;
+    // Update round and turn info
+    currentRound.textContent = currentCombat.round;
     const currentParticipant = currentCombat.participants[currentCombat.currentTurnIndex];
-    if (currentTurn) currentTurn.textContent = currentParticipant ? currentParticipant.name : '-';
+    currentTurn.textContent = currentParticipant ? currentParticipant.name : '-';
     
     initiativeOrder.innerHTML = currentCombat.participants.map((participant, index) => `
         <div class="initiative-item ${index === currentCombat.currentTurnIndex ? 'current-turn' : ''}" 

@@ -750,6 +750,7 @@ body {
     margin-bottom: 1rem;
     flex-wrap: nowrap;
     width: 100%;
+    align-items: stretch;
 }
 
 .npc-inputs .input-field {
@@ -764,11 +765,13 @@ body {
 .npc-inputs .input-field:nth-child(2) {
     flex: 0 0 80px;
     min-width: 80px;
+    text-align: center;
 }
 
 .npc-inputs .secondary-btn {
     flex: 0 0 auto;
     min-width: 100px;
+    white-space: nowrap;
 }
 
 .npc-list {
@@ -889,6 +892,8 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex: 1;
+    min-width: 0;
 }
 
 .initiative-rank {
@@ -905,11 +910,23 @@ body {
 .character-info {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-width: 0;
 }
 
 .character-name-combat {
     font-weight: 600;
     font-size: 1.1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.initiative-details {
+    flex-shrink: 0;
+    text-align: right;
+    color: #6b7280;
 }
 
 .initiative-value {
@@ -979,8 +996,9 @@ body {
     display: flex;
     gap: 0.5rem;
     flex-wrap: nowrap;
-    align-items: center;
+    align-items: stretch;
     margin-bottom: 1rem;
+    width: 100%;
 }
 
 .combat-controls .primary-btn,
@@ -993,6 +1011,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
 }
 
 /* Initiative Options */
@@ -2204,23 +2223,26 @@ body.dark-theme .scroll-indicator::after {
         flex-direction: row;
         gap: 0.5rem;
         flex-wrap: nowrap;
+        align-items: stretch;
     }
     
     .npc-inputs .input-field:first-child {
         flex: 2;
-        min-width: 100px;
+        min-width: 80px;
     }
     
     .npc-inputs .input-field:nth-child(2) {
-        flex: 0 0 60px;
-        min-width: 60px;
+        flex: 0 0 50px;
+        min-width: 50px;
+        text-align: center;
     }
     
     .npc-inputs .secondary-btn {
         flex: 0 0 auto;
-        min-width: 80px;
+        min-width: 60px;
         padding: 0.5rem;
         font-size: 0.8rem;
+        white-space: nowrap;
     }
     
     .party-characters-list {
