@@ -21,6 +21,11 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     touch-action: manipulation;
+    /* iOS safe area support */
+    padding-top: max(2rem, env(safe-area-inset-top) + 1rem);
+    padding-bottom: max(2rem, env(safe-area-inset-bottom) + 1rem);
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
 }
 
 #app {
@@ -470,6 +475,8 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    /* iOS safe area support */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 .modal-content {
@@ -477,9 +484,17 @@ body {
     border-radius: 12px;
     width: 90%;
     max-width: 500px;
-    max-height: 90vh;
+    max-height: calc(90vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    margin: 2rem 0;
     overflow-y: auto;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    /* Hide scrollbars but keep scrolling */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.modal-content::-webkit-scrollbar {
+    display: none;
 }
 
 .modal-header {
@@ -958,7 +973,7 @@ body {
 /* Manual Roll Modal */
 .manual-roll-modal {
     max-width: 700px !important;
-    max-height: 90vh !important;
+    max-height: calc(90vh - env(safe-area-inset-top) - env(safe-area-inset-bottom)) !important;
     width: 95% !important;
 }
 
@@ -1070,6 +1085,8 @@ body {
     align-items: center;
     z-index: 2000;
     backdrop-filter: blur(4px);
+    /* iOS safe area support */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 .custom-modal-content {
@@ -1078,9 +1095,17 @@ body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     max-width: 400px;
     width: 90%;
-    max-height: 80vh;
+    max-height: calc(80vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    margin: 2rem 0;
     overflow: auto;
     animation: modalSlideIn 0.3s ease;
+    /* Hide scrollbars but keep scrolling */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.custom-modal-content::-webkit-scrollbar {
+    display: none;
 }
 
 .custom-modal-header {
