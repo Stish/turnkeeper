@@ -1,0 +1,87 @@
+<!-- TurnKeeper RPG Combat Tracker Icon -->
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B0000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#DC143C;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradSword" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C0C0C0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#808080;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradShield" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#DAA520;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="url(#gradBg)" stroke="#5D0000" stroke-width="8"/>
+  
+  <!-- Shield -->
+  <path d="M 180 150 Q 120 180 120 240 Q 120 320 180 380 Q 220 400 256 380 Q 292 400 332 380 Q 392 320 392 240 Q 392 180 332 150 Q 290 130 256 130 Q 222 130 180 150 Z" 
+        fill="url(#gradShield)" stroke="#8B6914" stroke-width="4"/>
+  
+  <!-- Shield emblem -->
+  <circle cx="256" cy="240" r="30" fill="#8B0000"/>
+  <text x="256" y="252" text-anchor="middle" font-family="serif" font-size="28" font-weight="bold" fill="#FFD700">⚔</text>
+  
+  <!-- Sword behind shield -->
+  <g transform="rotate(-30 256 256)">
+    <!-- Sword blade -->
+    <rect x="240" y="80" width="32" height="200" rx="16" fill="url(#gradSword)" stroke="#696969" stroke-width="2"/>
+    <!-- Sword crossguard -->
+    <rect x="220" y="270" width="72" height="12" rx="6" fill="url(#gradSword)" stroke="#696969" stroke-width="2"/>
+    <!-- Sword handle -->
+    <rect x="244" y="280" width="24" height="60" rx="12" fill="#654321" stroke="#4A2C17" stroke-width="2"/>
+    <!-- Sword pommel -->
+    <circle cx="256" cy="350" r="16" fill="url(#gradSword)" stroke="#696969" stroke-width="2"/>
+  </g>
+  
+  <!-- Dice in corners -->
+  <!-- Top left die -->
+  <g transform="translate(80, 80)">
+    <rect x="0" y="0" width="40" height="40" rx="6" fill="white" stroke="#333" stroke-width="2"/>
+    <circle cx="20" cy="20" r="4" fill="#333"/>
+  </g>
+  
+  <!-- Top right die -->
+  <g transform="translate(392, 80)">
+    <rect x="0" y="0" width="40" height="40" rx="6" fill="white" stroke="#333" stroke-width="2"/>
+    <circle cx="12" cy="12" r="3" fill="#333"/>
+    <circle cx="28" cy="28" r="3" fill="#333"/>
+  </g>
+  
+  <!-- Bottom left die -->
+  <g transform="translate(80, 392)">
+    <rect x="0" y="0" width="40" height="40" rx="6" fill="white" stroke="#333" stroke-width="2"/>
+    <circle cx="12" cy="12" r="3" fill="#333"/>
+    <circle cx="20" cy="20" r="3" fill="#333"/>
+    <circle cx="28" cy="28" r="3" fill="#333"/>
+  </g>
+  
+  <!-- Bottom right die -->
+  <g transform="translate(392, 392)">
+    <rect x="0" y="0" width="40" height="40" rx="6" fill="white" stroke="#333" stroke-width="2"/>
+    <circle cx="12" cy="12" r="3" fill="#333"/>
+    <circle cx="28" cy="12" r="3" fill="#333"/>
+    <circle cx="12" cy="28" r="3" fill="#333"/>
+    <circle cx="28" cy="28" r="3" fill="#333"/>
+  </g>
+  
+  <!-- Initiative order numbers -->
+  <g transform="translate(40, 200)">
+    <circle cx="0" cy="0" r="20" fill="#FFD700" stroke="#DAA520" stroke-width="2"/>
+    <text x="0" y="6" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold" fill="#8B0000">1</text>
+  </g>
+  
+  <g transform="translate(472, 250)">
+    <circle cx="0" cy="0" r="20" fill="#C0C0C0" stroke="#A0A0A0" stroke-width="2"/>
+    <text x="0" y="6" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold" fill="#333">2</text>
+  </g>
+  
+  <g transform="translate(40, 320)">
+    <circle cx="0" cy="0" r="20" fill="#CD7F32" stroke="#B8860B" stroke-width="2"/>
+    <text x="0" y="6" text-anchor="middle" font-family="Arial" font-size="16" font-weight="bold" fill="white">3</text>
+  </g>
+</svg>
