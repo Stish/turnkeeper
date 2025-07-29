@@ -79,34 +79,6 @@
                 <div id="partyList" class="party-list">
                     <!-- Parties will be rendered here -->
                 </div>
-
-                <!-- New Party Modal -->
-                <div id="partyModal" class="modal" style="display: none;">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 id="partyModalTitle">Create New Party</h3>
-                            <button class="close-btn" id="closePartyModal">✕</button>
-                        </div>
-                        <div class="modal-body">
-                            <input type="text" id="partyNameInput" placeholder="Party name..." class="input-field">
-                            <div class="character-list">
-                                <h4>Characters</h4>
-                                <div id="characterInputs">
-                                    <div class="character-input">
-                                        <input type="text" placeholder="Character name" class="char-name">
-                                        <input type="number" placeholder="Init mod" class="char-init" value="0">
-                                        <button class="remove-char-btn">🗑️</button>
-                                    </div>
-                                </div>
-                                <button id="addCharacterBtn" class="secondary-btn">➕ Add Character</button>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button id="savePartyBtn" class="primary-btn">💾 Save Party</button>
-                            <button id="cancelPartyBtn" class="secondary-btn">❌ Cancel</button>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <!-- Combat Tab -->
@@ -431,6 +403,34 @@
                 🔌 You are offline. Changes will sync when you're back online.
             </div>
         </main>
+    </div>
+
+    <!-- New Party Modal - Moved outside app container -->
+    <div id="partyModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="partyModalTitle">Create New Party</h3>
+                <button class="close-btn" id="closePartyModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="partyNameInput" placeholder="Party name..." class="input-field">
+                <div class="character-list">
+                    <h4>Characters</h4>
+                    <div id="characterInputs">
+                        <div class="character-input">
+                            <input type="text" placeholder="Character name" class="char-name">
+                            <input type="number" placeholder="Init mod" class="char-init" value="0">
+                            <button class="remove-char-btn">🗑️</button>
+                        </div>
+                    </div>
+                    <button id="addCharacterBtn" class="secondary-btn">➕ Add Character</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="savePartyBtn" class="primary-btn">💾 Save Party</button>
+                <button id="cancelPartyBtn" class="secondary-btn">❌ Cancel</button>
+            </div>
+        </div>
     </div>
 
     <!-- Custom Alert Modal -->
