@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TurnKeeper Mobile Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+            background: #f8fafc;
+        }
+        .test-section {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-section h2 {
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+        .test-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .test-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+        .url-box {
+            background: #f1f5f9;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 1.1rem;
+            word-break: break-all;
+        }
+        .instructions {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .success {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .device-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .device-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+        .launch-btn {
+            background: #64748b;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 0.5rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .launch-btn:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 TurnKeeper Mobile Testing Hub</h1>
+    
+    <div class="instructions">
+        <h3>📱 Quick Start for Mobile Testing</h3>
+        <ol>
+            <li>Click "Launch TurnKeeper" button below</li>
+            <li>Press F12 and toggle device emulation (📱 icon)</li>
+            <li>Test different mobile devices using the checklist</li>
+        </ol>
+    </div>
+
+    <div style="text-align: center; margin: 2rem 0;">
+        <a href="index.html" class="launch-btn">🎮 Launch TurnKeeper</a>
+        <a href="start-mobile-server.bat" class="launch-btn">🖥️ Start Mobile Server</a>
+    </div>
+
+    <div class="test-section">
+        <h2>📱 Mobile Device Testing</h2>
+        <p>Test these devices in browser DevTools (F12 → Device Toggle):</p>
+        
+        <div class="device-grid">
+            <div class="device-card">
+                <h4>📱 iPhone</h4>
+                <div class="test-item">
+                    <input type="checkbox" id="iphone12">
+                    <label for="iphone12">iPhone 12/13/14</label>
+                </div>
+                <div class="test-item">
+                    <input type="checkbox" id="iphonese">
+                    <label for="iphonese">iPhone SE</label>
+                </div>
+                <div class="test-item">
+                    <input type="checkbox" id="iphone12pro">
+                    <label for="iphone12pro">iPhone 12 Pro Max</label>
+                </div>
+            </div>
+            
+            <div class="device-card">
+                <h4>🤖 Android</h4>
+                <div class="test-item">
+                    <input type="checkbox" id="pixel5">
+                    <label for="pixel5">Pixel 5</label>
+                </div>
+                <div class="test-item">
+                    <input type="checkbox" id="galaxys20">
+                    <label for="galaxys20">Galaxy S20 Ultra</label>
+                </div>
+                <div class="test-item">
+                    <input type="checkbox" id="galaxya51">
+                    <label for="galaxya51">Galaxy A51/71</label>
+                </div>
+            </div>
+            
+            <div class="device-card">
+                <h4>📱 Tablets</h4>
+                <div class="test-item">
+                    <input type="checkbox" id="ipadair">
+                    <label for="ipadair">iPad Air</label>
+                </div>
+                <div class="test-item">
+                    <input type="checkbox" id="ipadmini">
+                    <label for="ipadmini">iPad Mini</label>
+                </div>
+                <div class="test-item">
+                    <input type="checkbox" id="surfacepro">
+                    <label for="surfacepro">Surface Pro 7</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🧪 PWA Installation Testing</h2>
+        <div class="test-item">
+            <input type="checkbox" id="pwa1">
+            <label for="pwa1">Install prompt appears on mobile</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="pwa2">
+            <label for="pwa2">App installs to home screen</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="pwa3">
+            <label for="pwa3">App opens in standalone mode (no browser UI)</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="pwa4">
+            <label for="pwa4">App works offline after installation</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="pwa5">
+            <label for="pwa5">App icon displays correctly on home screen</label>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>👆 Touch & Interaction Testing</h2>
+        <div class="test-item">
+            <input type="checkbox" id="touch1">
+            <label for="touch1">All buttons are easily tappable (44px+)</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="touch2">
+            <label for="touch2">Drag and drop works on touch devices</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="touch3">
+            <label for="touch3">Scrolling feels smooth and natural</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="touch4">
+            <label for="touch4">No accidental zooming when tapping inputs</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="touch5">
+            <label for="touch5">Burger menu opens/closes smoothly</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="touch6">
+            <label for="touch6">Modal dialogs are touch-friendly</label>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🎨 UI/UX Mobile Testing</h2>
+        <div class="test-item">
+            <input type="checkbox" id="ui1">
+            <label for="ui1">Text is readable without zooming</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="ui2">
+            <label for="ui2">Navigation elements fit well on small screens</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="ui3">
+            <label for="ui3">Content layouts adapt properly to mobile</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="ui4">
+            <label for="ui4">Dark/light theme toggle works on mobile</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="ui5">
+            <label for="ui5">About and Settings pages are mobile-optimized</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="ui6">
+            <label for="ui6">Safe area (iPhone X+ notch) is handled properly</label>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🏃‍♂️ Performance Testing</h2>
+        <div class="test-item">
+            <input type="checkbox" id="perf1">
+            <label for="perf1">App loads quickly on mobile</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="perf2">
+            <label for="perf2">Animations run smoothly (60fps)</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="perf3">
+            <label for="perf3">No layout shifts during load</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="perf4">
+            <label for="perf4">Memory usage stays reasonable</label>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📶 Real Device Testing</h2>
+        <div class="instructions">
+            <p><strong>For testing on actual mobile devices:</strong></p>
+            <p>1. Run <code>start-mobile-server.bat</code></p>
+            <p>2. Connect your phone/tablet to the same WiFi</p>
+            <p>3. Open browser and go to one of these URLs:</p>
+        </div>
+        
+        <div class="url-box">
+            http://192.168.0.30:8080<br>
+            http://10.113.196.165:8080
+        </div>
+        
+        <div class="test-item">
+            <input type="checkbox" id="real1">
+            <label for="real1">Tested on real iPhone</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="real2">
+            <label for="real2">Tested on real Android device</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="real3">
+            <label for="real3">Installed as PWA on real device</label>
+        </div>
+        <div class="test-item">
+            <input type="checkbox" id="real4">
+            <label for="real4">Works offline on real device</label>
+        </div>
+    </div>
+
+    <div class="success" id="completionMessage" style="display: none;">
+        <h3>🎉 Congratulations!</h3>
+        <p>Your PWA is fully tested and ready for mobile users! All core functionality works across devices and your app can be installed as a native-like experience.</p>
+    </div>
+
+    <script>
+        // Auto-save test progress
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const completionMessage = document.getElementById('completionMessage');
+        
+        // Load saved progress
+        checkboxes.forEach(checkbox => {
+            const saved = localStorage.getItem(`test_${checkbox.id}`);
+            if (saved === 'true') {
+                checkbox.checked = true;
+            }
+            
+            checkbox.addEventListener('change', () => {
+                localStorage.setItem(`test_${checkbox.id}`, checkbox.checked);
+                updateCompletion();
+            });
+        });
+        
+        function updateCompletion() {
+            const total = checkboxes.length;
+            const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+            
+            if (completed === total) {
+                completionMessage.style.display = 'block';
+                completionMessage.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                completionMessage.style.display = 'none';
+            }
+        }
+        
+        updateCompletion();
+    </script>
+</body>
+</html>

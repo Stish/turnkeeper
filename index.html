@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>TurnKeeper - Combat Initiative Tracker</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="TurnKeeper - Free combat initiative tracker for tabletop RPG games. Works offline as a PWA. Perfect for D&D, Pathfinder, and more.">
+    <meta name="keywords" content="RPG, D&D, combat tracker, initiative, tabletop, PWA, Dungeons Dragons, Pathfinder">
+    <meta name="author" content="Stish">
+    <meta name="theme-color" content="#64748b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TurnKeeper">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="TurnKeeper">
+    <meta name="msapplication-TileColor" content="#64748b">
+    <meta name="msapplication-config" content="browserconfig.xml">
+    
+    <!-- Open Graph for social sharing -->
+    <meta property="og:title" content="TurnKeeper - Combat Initiative Tracker">
+    <meta property="og:description" content="Free PWA for tracking combat initiative in tabletop RPG games like D&D and Pathfinder">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourusername.github.io/turnkeeper-pwa">
+    <meta property="og:image" content="https://yourusername.github.io/turnkeeper-pwa/icons/icon-512x512.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="TurnKeeper - Combat Initiative Tracker">
+    <meta name="twitter:description" content="Free PWA for tracking combat initiative in tabletop RPG games">
+    <meta name="twitter:image" content="https://yourusername.github.io/turnkeeper-pwa/icons/icon-512x512.png">
+    
+    <!-- App Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <header class="app-header">
+            <h1>⚔️ TurnKeeper</h1>
+            <div class="header-actions">
+                <button id="installButton" class="install-button" style="display: none;">
+                    📱 Install App
+                </button>
+            </div>
+        </header>
+
+        <nav class="tab-navigation">
+            <button class="tab-btn active" data-tab="parties">👥 Parties</button>
+            <button class="tab-btn" data-tab="combat">⚔️ Combat</button>
+            <div class="burger-menu-container">
+                <button class="burger-menu-btn" id="burgerMenuBtn">
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                    <span class="burger-line"></span>
+                </button>
+                <div class="burger-dropdown" id="burgerDropdown">
+                    <button class="dropdown-item tab-btn" data-tab="about">ℹ️ About</button>
+                    <button class="dropdown-item tab-btn" data-tab="settings">⚙️ Settings</button>
+                </div>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <!-- Parties Tab -->
+            <div id="parties-tab" class="tab-content active">
+                <div class="section-header">
+                    <h2>Party Management</h2>
+                    <button id="newPartyBtn" class="primary-btn" onclick="window.testNewParty()">➕ New Party</button>
+                </div>
+                
+                <div id="partyList" class="party-list">
+                    <!-- Parties will be rendered here -->
+                </div>
+
+                <!-- New Party Modal -->
+                <div id="partyModal" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="partyModalTitle">Create New Party</h3>
+                            <button class="close-btn" id="closePartyModal">✕</button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" id="partyNameInput" placeholder="Party name..." class="input-field">
+                            <div class="character-list">
+                                <h4>Characters</h4>
+                                <div id="characterInputs">
+                                    <div class="character-input">
+                                        <input type="text" placeholder="Character name" class="char-name">
+                                        <input type="number" placeholder="Init mod" class="char-init" value="0">
+                                        <button class="remove-char-btn">🗑️</button>
+                                    </div>
+                                </div>
+                                <button id="addCharacterBtn" class="secondary-btn">➕ Add Character</button>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="savePartyBtn" class="primary-btn">💾 Save Party</button>
+                            <button id="cancelPartyBtn" class="secondary-btn">❌ Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combat Tab -->
+            <div id="combat-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Combat Tracker</h2>
+                    <div class="combat-controls">
+                        <button id="newCombatBtn" class="primary-btn" onclick="window.testNewCombat()">⚔️ New Combat</button>
+                        <button id="endCombatBtn" class="danger-btn" style="display: none;">🏁 End Combat</button>
+                    </div>
+                </div>
+
+                <div id="combatSetup" class="combat-setup">
+                    <div class="setup-section">
+                        <h3>Select Party</h3>
+                        <select id="partySelect" class="select-field">
+                            <option value="">Select a party...</option>
+                        </select>
+                    </div>
+                    
+                    <div id="partyCharacters" class="setup-section" style="display: none;">
+                        <h3>Combat Participants</h3>
+                        <div id="partyCharactersList" class="party-characters-list">
+                            <!-- Party characters and NPCs will be displayed here -->
+                        </div>
+                    </div>
+                    
+                    <div class="setup-section">
+                        <h3>Add NPCs</h3>
+                        <div class="npc-inputs">
+                            <input type="text" id="npcNameInput" placeholder="NPC name" class="input-field">
+                            <input type="number" id="npcInitInput" placeholder="Init mod" class="input-field" value="0">
+                            <button id="addNpcBtn" class="secondary-btn">➕ Add NPC</button>
+                        </div>
+                        <div id="npcList" class="npc-list">
+                            <!-- NPCs will be listed here -->
+                        </div>
+                    </div>
+
+                    <div class="initiative-options">
+                        <div class="initiative-mode-toggle">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="manualRollMode" class="toggle-checkbox">
+                                <span class="toggle-text">Manual Dice Rolls</span>
+                                <small class="toggle-description">Use real dice rolls from the table</small>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button id="startCombatBtn" class="primary-btn" style="display: none;">🎲 Roll Initiative & Start Combat</button>
+                </div>
+
+                <div id="combatTracker" class="combat-tracker" style="display: none;">
+                    <div class="round-info">
+                        <span>Round: <strong id="currentRound">1</strong></span>
+                        <span>Current Turn: <strong id="currentTurn">-</strong></span>
+                    </div>
+                    
+                    <div class="initiative-list">
+                        <div class="list-header">
+                            <span>Initiative Order</span>
+                            <button id="nextTurnBtn" class="primary-btn">➡️ Next Turn</button>
+                        </div>
+                        <div id="initiativeOrder" class="initiative-order">
+                            <!-- Initiative order will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Tab -->
+            <div id="about-tab" class="tab-content">
+                <div class="about-container">
+                    <div class="about-header">
+                        <h2>⚔️ TurnKeeper</h2>
+                        <div class="version-info">
+                            <span class="version-tag">v0.1.0</span>
+                            <span class="author">by Stish</span>
+                        </div>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>🎯 What is TurnKeeper?</h3>
+                        <p>TurnKeeper is a modern, feature-rich combat initiative tracker designed for tabletop RPG games. Whether you're running D&D, Pathfinder, or any other RPG system, TurnKeeper helps you manage combat encounters with ease and style.</p>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>✨ Key Features</h3>
+                        <div class="features-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon">👥</div>
+                                <h4>Party Management</h4>
+                                <p>Create and manage multiple adventuring parties with custom characters, initiative modifiers, and party compositions.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">🎲</div>
+                                <h4>Initiative Rolling</h4>
+                                <p>Automatic initiative rolling with modifiers, or manual dice entry for those who prefer rolling real dice at the table.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">⚡</div>
+                                <h4>Dynamic Combat Tracking</h4>
+                                <p>Track rounds, turns, and initiative order with visual indicators for the current turn and easy navigation.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">🔄</div>
+                                <h4>Drag & Drop Reordering</h4>
+                                <p>Easily adjust initiative order during combat by dragging characters to new positions in the turn order.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">👹</div>
+                                <h4>NPC Support</h4>
+                                <p>Add NPCs and monsters on-the-fly with custom initiative modifiers to handle unexpected encounters.</p>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon">📱</div>
+                                <h4>Progressive Web App</h4>
+                                <p>Install on your device for offline access, fast loading, and a native app-like experience at your gaming table.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>🚀 How It Works</h3>
+                        <div class="workflow-steps">
+                            <div class="workflow-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h4>Create Your Party</h4>
+                                    <p>Start by creating a party and adding your player characters with their initiative modifiers. You can edit names and modifiers anytime.</p>
+                                </div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h4>Set Up Combat</h4>
+                                    <p>Select your party for the encounter and add any NPCs or monsters. Choose between automatic rolling or manual dice entry.</p>
+                                </div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h4>Roll Initiative</h4>
+                                    <p>Let TurnKeeper roll initiative automatically, or enter real dice rolls from your table for that authentic tabletop feel.</p>
+                                </div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h4>Track Combat</h4>
+                                    <p>Follow the initiative order, advance turns, track rounds, and reorder participants as needed during the encounter.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>💡 Pro Tips</h3>
+                        <div class="tips-list">
+                            <div class="tip-item">
+                                <span class="tip-icon">🏷️</span>
+                                <p><strong>Color-coded participants:</strong> PCs appear with green tags, NPCs with red tags for easy identification.</p>
+                            </div>
+                            <div class="tip-item">
+                                <span class="tip-icon">📱</span>
+                                <p><strong>Install as PWA:</strong> Add TurnKeeper to your device's home screen for quick access and offline functionality.</p>
+                            </div>
+                            <div class="tip-item">
+                                <span class="tip-icon">🔄</span>
+                                <p><strong>Reorder on-the-fly:</strong> Drag characters up or down in the initiative list to handle delayed actions or initiative changes.</p>
+                            </div>
+                            <div class="tip-item">
+                                <span class="tip-icon">💾</span>
+                                <p><strong>Auto-save:</strong> All your parties and characters are automatically saved locally on your device.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-footer">
+                        <p>Built with ❤️ for the tabletop RPG community</p>
+                        <p class="tech-note">Made with modern web technologies for speed, reliability, and an amazing user experience.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings-tab" class="tab-content">
+                <div class="settings-container">
+                    <div class="settings-header">
+                        <h2>⚙️ Settings</h2>
+                        <p>Customize your TurnKeeper experience</p>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>🎨 Appearance</h3>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label class="setting-label">Color Theme</label>
+                                <p class="setting-description">Choose between light and dark color schemes</p>
+                            </div>
+                            <div class="theme-toggle">
+                                <input type="radio" id="lightTheme" name="theme" value="light" checked>
+                                <label for="lightTheme" class="theme-option">
+                                    <span class="theme-preview light-preview"></span>
+                                    <span class="theme-name">Light</span>
+                                </label>
+                                
+                                <input type="radio" id="darkTheme" name="theme" value="dark">
+                                <label for="darkTheme" class="theme-option">
+                                    <span class="theme-preview dark-preview"></span>
+                                    <span class="theme-name">Dark</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>🔧 General</h3>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label class="setting-label">Auto-save Parties</label>
+                                <p class="setting-description">Automatically save party changes locally</p>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="autoSave" checked disabled>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label class="setting-label">Default Initiative Mode</label>
+                                <p class="setting-description">Choose automatic rolling or manual dice entry as default</p>
+                            </div>
+                            <div class="setting-control">
+                                <select id="defaultInitMode" class="setting-select">
+                                    <option value="auto">Automatic Rolling</option>
+                                    <option value="manual">Manual Dice Entry</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>🔒 Privacy & Legal</h3>
+                        <div class="legal-content">
+                            <div class="legal-item">
+                                <h4>🛡️ Privacy Notice</h4>
+                                <div class="legal-text">
+                                    <p><strong>Data Storage:</strong> TurnKeeper stores all your data locally on your device using browser localStorage. No data is transmitted to external servers.</p>
+                                    
+                                    <p><strong>What We Store:</strong></p>
+                                    <ul>
+                                        <li>Party names and character information you create</li>
+                                        <li>Combat state and initiative data during active sessions</li>
+                                        <li>Your theme preference and app settings</li>
+                                    </ul>
+                                    
+                                    <p><strong>Data Sharing:</strong> We do not collect, transmit, or share any personal data. All information remains on your device.</p>
+                                    
+                                    <p><strong>Cookies:</strong> This app does not use cookies for tracking. Browser localStorage is used solely for app functionality.</p>
+                                    
+                                    <p><strong>Third Parties:</strong> No third-party services have access to your data. The app functions entirely offline after initial loading.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="legal-item">
+                                <h4>⚖️ Terms of Use</h4>
+                                <div class="legal-text">
+                                    <p><strong>Purpose:</strong> TurnKeeper is provided as a free tool for tabletop RPG players to manage combat initiative.</p>
+                                    
+                                    <p><strong>Warranty:</strong> This application is provided "as is" without warranty of any kind. Use at your own discretion.</p>
+                                    
+                                    <p><strong>Liability:</strong> The developer is not liable for any loss of data or interruption of gaming sessions.</p>
+                                    
+                                    <p><strong>Open Source:</strong> This project is built with standard web technologies and respects user privacy by design.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="legal-item">
+                                <h4>📧 Contact & Imprint</h4>
+                                <div class="legal-text">
+                                    <p><strong>Developer:</strong> Stish</p>
+                                    <p><strong>Project:</strong> TurnKeeper v0.1.0</p>
+                                    <p><strong>Built:</strong> 2025</p>
+                                    <p><strong>Technology:</strong> Progressive Web App (HTML5, CSS3, JavaScript)</p>
+                                    
+                                    <p><strong>Data Controller:</strong> As this app processes no personal data and stores everything locally, traditional data controller concepts do not apply.</p>
+                                    
+                                    <p><strong>Questions:</strong> For technical issues or feature requests, this is a personal project. Data remains entirely under your control on your device.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="legal-item">
+                                <h4>🗑️ Data Management</h4>
+                                <div class="legal-text">
+                                    <p><strong>Export Your Data:</strong> All data is stored in your browser's localStorage and can be backed up through browser developer tools.</p>
+                                    
+                                    <p><strong>Delete Your Data:</strong> You can clear all app data by:</p>
+                                    <ul>
+                                        <li>Using your browser's "Clear site data" option</li>
+                                        <li>Clearing localStorage for this domain</li>
+                                        <li>Uninstalling the PWA from your device</li>
+                                    </ul>
+                                    
+                                    <p><strong>Data Portability:</strong> Your data is stored in standard JSON format and remains accessible to you at all times.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-footer">
+                        <button class="secondary-btn" id="resetSettings">🔄 Reset to Defaults</button>
+                        <button class="primary-btn" id="saveSettings">💾 Save Settings</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="offline-indicator" id="offlineIndicator" style="display: none;">
+                🔌 You are offline. Changes will sync when you're back online.
+            </div>
+        </main>
+    </div>
+
+    <!-- Custom Alert Modal -->
+    <div id="customAlertModal" class="custom-modal" style="display: none;">
+        <div class="custom-modal-content">
+            <div class="custom-modal-header">
+                <h3 id="customAlertTitle">Alert</h3>
+            </div>
+            <div class="custom-modal-body">
+                <p id="customAlertMessage"></p>
+            </div>
+            <div class="custom-modal-footer">
+                <button id="customAlertOkBtn" class="btn btn-primary">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Confirm Modal -->
+    <div id="customConfirmModal" class="custom-modal" style="display: none;">
+        <div class="custom-modal-content">
+            <div class="custom-modal-header">
+                <h3 id="customConfirmTitle">Confirm</h3>
+            </div>
+            <div class="custom-modal-body">
+                <p id="customConfirmMessage"></p>
+            </div>
+            <div class="custom-modal-footer">
+                <button id="customConfirmCancelBtn" class="btn btn-secondary">Cancel</button>
+                <button id="customConfirmOkBtn" class="btn btn-danger">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manual Dice Roll Modal -->
+    <div id="manualRollModal" class="custom-modal" style="display: none;">
+        <div class="custom-modal-content manual-roll-modal">
+            <div class="custom-modal-header">
+                <h3>Enter Manual Dice Rolls</h3>
+                <p class="modal-subtitle">Enter the d20 rolls for each participant (1-20)</p>
+            </div>
+            <div class="custom-modal-body">
+                <div id="manualRollInputs" class="manual-roll-inputs">
+                    <!-- Manual roll inputs will be generated here -->
+                </div>
+            </div>
+            <div class="custom-modal-footer">
+                <button id="cancelManualRolls" class="btn btn-secondary">Cancel</button>
+                <button id="confirmManualRolls" class="btn btn-primary">Start Combat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
