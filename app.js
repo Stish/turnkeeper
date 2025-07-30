@@ -823,48 +823,130 @@ let originalNextSibling = null;
 function setupDragAndDrop() {
     const items = initiativeOrder.querySelectorAll('.initiative-item');
     
+    // Add dragover and drop to the container itself
+    initiativeOrder.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+    });
+    
+    initiativeOrder.addEventListener('drop', (e) => {
+        e.preventDefault();
+        
+        // Calculate new position based on placeholder location
+        let newIndex = draggedIndex; // Default to original position
+        
+        if (dragPlaceholder && dragPlaceholder.parentNode) {
+            // Get all initiative items in the container
+            const container = dragPlaceholder.parentNode;
+            const allItems = Array.from(container.children);
+            
+            // Find placeholder position and count real items before it
+            const placeholderPos = allItems.indexOf(dragPlaceholder);
+            newIndex = 0;
+            
+            for (let i = 0; i < placeholderPos; i++) {
+                const child = allItems[i];
+                if (child.classList.contains('initiative-item') && 
+                    !child.classList.contains('drag-placeholder') &&
+                    !child.classList.contains('dragging')) {
+                    newIndex++;
+                }
+            }
+            
+            // Remove placeholder immediately
+            dragPlaceholder.parentNode.removeChild(dragPlaceholder);
+            dragPlaceholder = null;
+        }
+        
+        // Only reorder if position actually changed
+        if (newIndex !== draggedIndex && draggedIndex !== null) {
+            reorderInitiativeList(draggedIndex, newIndex);
+        }
+    });
+    
     items.forEach((item, index) => {
-        // Desktop drag and drop events
+        // Make sure the item is draggable
+        item.setAttribute('draggable', 'true');
+        
+        // Force draggable and check if drag events fire
+        item.draggable = true;
+        
+        // Enhanced desktop drag and drop events with live preview
         item.addEventListener('dragstart', (e) => {
             draggedIndex = index;
             item.classList.add('dragging');
             e.dataTransfer.effectAllowed = 'move';
             e.dataTransfer.setData('text/html', item.outerHTML);
-        });
+            
+            // Store original position for restoration if needed
+            originalParent = item.parentNode;
+            originalNextSibling = item.nextSibling;
+        }, true); // Use capture phase
         
         item.addEventListener('dragend', (e) => {
+            // Clean up visual styles
             item.classList.remove('dragging');
+            item.style.opacity = '';
             items.forEach(i => i.classList.remove('drag-over'));
+            
+            // Clean up placeholder if it still exists
+            setTimeout(() => {
+                if (dragPlaceholder && dragPlaceholder.parentNode) {
+                    dragPlaceholder.parentNode.removeChild(dragPlaceholder);
+                    dragPlaceholder = null;
+                }
+                draggedIndex = null;
+            }, 0);
         });
         
         item.addEventListener('dragover', (e) => {
             e.preventDefault();
             e.dataTransfer.dropEffect = 'move';
+            
+            // Create placeholder on first dragover if it doesn't exist
+            if (!dragPlaceholder && draggedIndex !== null) {
+                dragPlaceholder = document.createElement('div');
+                dragPlaceholder.className = 'initiative-item drag-placeholder';
+                dragPlaceholder.style.height = '60px';
+                dragPlaceholder.style.opacity = '0.3';
+                dragPlaceholder.style.border = '2px dashed #64748b';
+                dragPlaceholder.style.background = 'rgba(100, 116, 139, 0.1)';
+                dragPlaceholder.innerHTML = '<div style="text-align: center; padding: 1rem; color: #64748b;">Drop here</div>';
+            }
+            
+            // Update placeholder position
+            if (dragPlaceholder && draggedIndex !== index) {
+                const container = item.parentNode;
+                const rect = item.getBoundingClientRect();
+                const dragY = e.clientY;
+                const targetCenter = rect.top + rect.height / 2;
+                
+                try {
+                    if (dragY < targetCenter) {
+                        container.insertBefore(dragPlaceholder, item);
+                    } else {
+                        const nextSibling = item.nextSibling;
+                        if (nextSibling) {
+                            container.insertBefore(dragPlaceholder, nextSibling);
+                        } else {
+                            container.appendChild(dragPlaceholder);
+                        }
+                    }
+                } catch (error) {
+                    // Silently handle drag positioning errors
+                }
+            }
         });
         
         item.addEventListener('dragenter', (e) => {
             e.preventDefault();
-            if (draggedIndex !== index) {
-                item.classList.add('drag-over');
-            }
         });
         
         item.addEventListener('dragleave', (e) => {
-            // Only remove drag-over if we're actually leaving the element
-            if (!item.contains(e.relatedTarget)) {
-                item.classList.remove('drag-over');
+            // Only handle if we're leaving the container entirely
+            if (!e.currentTarget.contains(e.relatedTarget)) {
+                // Don't remove placeholder here, let dragover handle positioning
             }
-        });
-        
-        item.addEventListener('drop', (e) => {
-            e.preventDefault();
-            item.classList.remove('drag-over');
-            
-            const dropIndex = index;
-            if (draggedIndex !== null && draggedIndex !== dropIndex) {
-                reorderInitiativeList(draggedIndex, dropIndex);
-            }
-            draggedIndex = null;
         });
 
         // Enhanced touch events for mobile devices with live preview
@@ -1027,7 +1109,9 @@ function resetDragVariables() {
 }
 
 function reorderInitiativeList(fromIndex, toIndex) {
-    if (!currentCombat || fromIndex === toIndex) return;
+    if (!currentCombat || fromIndex === toIndex) {
+        return;
+    }
     
     // Get the participants array
     const participants = currentCombat.participants;

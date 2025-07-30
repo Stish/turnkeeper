@@ -674,7 +674,7 @@ body {
 }
 
 .party-character-name {
-    font-weight: 600;
+    font-weight: bold;
     color: #333;
     flex: 1;
 }
@@ -683,11 +683,15 @@ body {
     background: none;
     border: none;
     font-size: inherit;
-    font-weight: inherit;
+    font-weight: bold;
+    font-family: inherit;
     color: inherit;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     border: 1px solid transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .party-character-name.editable:focus {
@@ -902,8 +906,6 @@ body {
 
 .initiative-item[draggable="true"] {
     cursor: grab;
-    /* Improve touch interaction */
-    touch-action: none;
     user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
@@ -940,7 +942,7 @@ body {
 }
 
 .character-name-combat {
-    font-weight: 600;
+    font-weight: bold;
     font-size: 1.1rem;
     white-space: nowrap;
     overflow: hidden;
