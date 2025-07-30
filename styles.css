@@ -133,7 +133,7 @@ body {
     }
 
     .fullscreen-combat .combat-tracker {
-        padding: 0.5rem !important;
+        padding: 0 !important;
         height: 100vh;
         height: 100dvh;
         display: flex !important;
@@ -148,7 +148,7 @@ body {
         justify-content: space-between;
         align-items: center;
         border-radius: 12px 12px 0 0;
-        margin: 1rem 1rem 0 1rem;
+        margin: 0 1rem 0 1rem;
         flex-shrink: 0;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         /* iOS PWA safe area support for combat controls */
@@ -172,7 +172,7 @@ body {
     .fullscreen-combat .initiative-list {
         flex: 1;
         overflow-y: auto;
-        padding: 0.5rem;
+        padding: 1rem;
         background: white;
         border-radius: 0 0 12px 12px;
         margin: 0 1rem 1rem 1rem;
