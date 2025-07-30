@@ -87,6 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
         showCombatTab();
         showCombatTracker();
         renderInitiativeOrder();
+        // Enable fullscreen combat mode for restored combat
+        document.body.classList.add('fullscreen-combat');
     }
 });
 
@@ -765,6 +767,9 @@ function finalizeCombatStart() {
     saveCombatState();
     showCombatTracker();
     renderInitiativeOrder();
+    
+    // Enable fullscreen combat mode
+    document.body.classList.add('fullscreen-combat');
 }
 
 function updateStartButtonText() {
@@ -1162,6 +1167,9 @@ async function endCombat() {
         combatSetup.style.display = 'block';
         combatTracker.style.display = 'none';
         endCombatBtn.style.display = 'none';
+        
+        // Disable fullscreen combat mode
+        document.body.classList.remove('fullscreen-combat');
         
         // Keep the party selected - don't reset partySelect.value
         // Keep NPCs in the display since we preserved them in combatParticipants

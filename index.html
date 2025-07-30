@@ -85,11 +85,6 @@
 
             <!-- Combat Tab -->
             <div id="combat-tab" class="tab-content">
-                <div class="combat-controls">
-                    <button id="newCombatBtn" class="primary-btn">⚔️ New Combat</button>
-                    <button id="endCombatBtn" class="danger-btn" style="display: none;">🏁 End Combat</button>
-                </div>
-
                 <div id="combatSetup" class="combat-setup">
                     <div class="setup-section">
                         <h3>Select Party</h3>
@@ -131,6 +126,11 @@
                 </div>
 
                 <div id="combatTracker" class="combat-tracker" style="display: none;">
+                    <div class="combat-controls">
+                        <button id="newCombatBtn" class="primary-btn">⚔️ New Combat</button>
+                        <button id="endCombatBtn" class="danger-btn" style="display: none;">🏁 End Combat</button>
+                    </div>
+                    
                     <div class="round-info">
                         <span>Round: <strong id="currentRound">1</strong></span>
                         <span>Current Turn: <strong id="currentTurn">-</strong></span>
