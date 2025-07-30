@@ -9,6 +9,7 @@
 html {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
+    overflow-x: hidden; /* Prevent horizontal scrolling at root level */
 }
 
 body {
@@ -24,6 +25,7 @@ body {
     position: relative;
     z-index: auto;
     isolation: isolate;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
     /* iOS safe area support */
     padding-top: max(2rem, env(safe-area-inset-top) + 1rem);
     padding-bottom: max(2rem, env(safe-area-inset-bottom) + 1rem);
@@ -39,6 +41,7 @@ body {
     position: relative;
     z-index: 1;
     border-radius: 12px;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
     
     /* Hide scrollbars but keep scrolling */
     scrollbar-width: none; /* Firefox */
@@ -78,67 +81,90 @@ body {
     align-items: center;
 }
 
-/* Fullscreen Combat Mode */
-.fullscreen-combat .app-header,
-.fullscreen-combat .tab-navigation {
-    display: none;
+/* Fullscreen Combat Mode - Mobile Only */
+@media (max-width: 1024px) {
+    .fullscreen-combat .app-header,
+    .fullscreen-combat .tab-navigation {
+        display: none;
+    }
+
+    .fullscreen-combat {
+        padding: 0 !important;
+    }
+
+    .fullscreen-combat #app {
+        max-width: none;
+        margin: 0;
+        box-shadow: none;
+        border-radius: 0;
+        height: 100vh;
+        height: 100dvh; /* Dynamic viewport height */
+    }
+
+    .fullscreen-combat .main-content {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+    }
+
+    .fullscreen-combat .combat-tracker {
+        padding: 0.5rem !important;
+        height: 100vh;
+        height: 100dvh;
+        display: flex !important;
+        flex-direction: column;
+    }
+
+    .fullscreen-combat .combat-controls {
+        background: #64748b;
+        color: white;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 0;
+        margin: 0;
+        flex-shrink: 0;
+    }
+
+    .fullscreen-combat .combat-controls .primary-btn,
+    .fullscreen-combat .combat-controls .danger-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .fullscreen-combat .combat-controls .primary-btn:hover,
+    .fullscreen-combat .combat-controls .danger-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .fullscreen-combat .initiative-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0.5rem;
+    }
 }
 
-.fullscreen-combat {
-    padding: 0 !important;
-}
-
-.fullscreen-combat #app {
-    max-width: none;
-    margin: 0;
-    box-shadow: none;
-    border-radius: 0;
-    height: 100vh;
-    height: 100dvh; /* Dynamic viewport height */
-}
-
-.fullscreen-combat .main-content {
-    padding: 0;
-    margin: 0;
-    height: 100%;
-}
-
-.fullscreen-combat .combat-tracker {
-    padding: 0.5rem !important;
-    height: 100vh;
-    height: 100dvh;
-    display: flex !important;
-    flex-direction: column;
-}
-
-.fullscreen-combat .combat-controls {
-    background: #64748b;
-    color: white;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 0;
-    margin: 0;
-    flex-shrink: 0;
-}
-
-.fullscreen-combat .combat-controls .primary-btn,
-.fullscreen-combat .combat-controls .danger-btn {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.fullscreen-combat .combat-controls .primary-btn:hover,
-.fullscreen-combat .combat-controls .danger-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-.fullscreen-combat .initiative-list {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0.5rem;
+/* Desktop: Keep normal layout even in combat mode */
+@media (min-width: 1025px) {
+    .fullscreen-combat #app {
+        max-width: 800px;
+        margin: 0 auto;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+        border-radius: 12px;
+        height: auto;
+    }
+    
+    .fullscreen-combat .main-content {
+        padding: 2rem;
+    }
+    
+    .fullscreen-combat .combat-tracker {
+        padding: 0 !important;
+        height: auto;
+        display: block !important;
+    }
 }
 
 .install-button {
@@ -285,6 +311,7 @@ body {
 .main-content {
     padding: 1rem;
     overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
     -webkit-overflow-scrolling: touch;
 }
 
@@ -316,6 +343,7 @@ body {
 .tab-content {
     display: none;
     overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
     -webkit-overflow-scrolling: touch;
 }
 
@@ -636,6 +664,9 @@ body {
     gap: 0.5rem;
     margin-bottom: 1rem;
     align-items: center;
+    width: 100%;
+    max-width: 100%; /* Ensure it doesn't exceed container */
+    overflow: hidden; /* Prevent any child overflow */
 }
 
 .char-name {
@@ -821,7 +852,9 @@ body {
     margin-bottom: 1rem;
     flex-wrap: nowrap;
     width: 100%;
+    max-width: 100%; /* Ensure it doesn't exceed container */
     align-items: stretch;
+    overflow: hidden; /* Prevent any child overflow */
 }
 
 .npc-inputs .input-field {
@@ -924,6 +957,10 @@ body {
     transition: all 0.3s ease;
     cursor: move;
     user-select: none;
+    width: 100%;
+    max-width: 100%; /* Ensure it doesn't exceed container */
+    overflow: hidden; /* Prevent any child overflow */
+    box-sizing: border-box;
 }
 
 .initiative-item:hover {
@@ -1094,6 +1131,8 @@ body {
     align-items: stretch;
     margin-bottom: 1rem;
     width: 100%;
+    max-width: 100%; /* Ensure it doesn't exceed container */
+    overflow: hidden; /* Prevent any child overflow */
 }
 
 .combat-controls .primary-btn,
@@ -2615,15 +2654,7 @@ body.dark-theme .scroll-indicator::after {
         border-radius: 8px;
     }
     
-    /* Mobile fullscreen combat enhancements */
-    .fullscreen-combat .combat-tracker {
-        height: 100vh;
-        height: 100dvh; /* Dynamic viewport height for mobile */
-        margin: 0;
-        border-radius: 0;
-        padding: 0;
-    }
-    
+    /* Mobile fullscreen combat enhancements - additional safe area support */
     .fullscreen-combat .combat-controls {
         padding: max(0.75rem, env(safe-area-inset-top) + 0.5rem) 1rem 0.75rem 1rem;
     }
