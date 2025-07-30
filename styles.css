@@ -148,7 +148,7 @@ body {
         justify-content: space-between;
         align-items: center;
         border-radius: 12px 12px 0 0;
-        margin: 1rem 1rem 0 1rem;
+        margin: 0 2rem 0 2rem;
         flex-shrink: 0;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         /* iOS PWA safe area support for combat controls */
@@ -175,7 +175,7 @@ body {
         padding: 1rem;
         background: white;
         border-radius: 0 0 12px 12px;
-        margin: 0 1rem 1rem 1rem;
+        margin: 0 2rem 1rem 2rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 }
