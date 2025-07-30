@@ -816,6 +816,9 @@ let draggedIndex = null;
 let touchStartY = 0;
 let touchStartElement = null;
 let isDragging = false;
+let dragPlaceholder = null;
+let originalParent = null;
+let originalNextSibling = null;
 
 function setupDragAndDrop() {
     const items = initiativeOrder.querySelectorAll('.initiative-item');
@@ -864,20 +867,46 @@ function setupDragAndDrop() {
             draggedIndex = null;
         });
 
-        // Touch events for mobile devices
+        // Enhanced touch events for mobile devices with live preview
         item.addEventListener('touchstart', (e) => {
             touchStartY = e.touches[0].clientY;
             touchStartElement = item;
             draggedIndex = index;
             isDragging = false;
             
+            // Store original position for restoration if needed
+            originalParent = item.parentNode;
+            originalNextSibling = item.nextSibling;
+            
             // Add a slight delay before considering it a drag
             setTimeout(() => {
                 if (touchStartElement === item) {
                     isDragging = true;
+                    
+                    // Create a visual placeholder
+                    dragPlaceholder = document.createElement('div');
+                    dragPlaceholder.className = 'initiative-item drag-placeholder';
+                    dragPlaceholder.style.height = item.offsetHeight + 'px';
+                    dragPlaceholder.style.opacity = '0.3';
+                    dragPlaceholder.style.border = '2px dashed #64748b';
+                    dragPlaceholder.style.background = 'rgba(100, 116, 139, 0.1)';
+                    dragPlaceholder.innerHTML = '<div style="text-align: center; padding: 1rem; color: #64748b;">Drop here</div>';
+                    
+                    // Insert placeholder at current position
+                    originalParent.insertBefore(dragPlaceholder, item);
+                    
+                    // Style the dragged item
                     item.classList.add('dragging');
+                    item.style.position = 'fixed';
+                    item.style.zIndex = '9999';
+                    item.style.pointerEvents = 'none';
+                    item.style.width = item.offsetWidth + 'px';
+                    
                     // Prevent scrolling while dragging
                     document.body.style.overflow = 'hidden';
+                    
+                    // Position the item at touch point
+                    updateDragPosition(e.touches[0]);
                 }
             }, 200);
         }, { passive: true });
@@ -887,19 +916,33 @@ function setupDragAndDrop() {
             
             e.preventDefault();
             const touch = e.touches[0];
-            const currentY = touch.clientY;
             
-            // Remove existing drag-over classes
-            items.forEach(i => i.classList.remove('drag-over'));
+            // Update dragged item position
+            updateDragPosition(touch);
             
-            // Find the element we're hovering over
-            const elementBelow = document.elementFromPoint(touch.clientX, currentY);
-            const targetItem = elementBelow?.closest('.initiative-item');
+            // Find drop target and update placeholder position
+            const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+            const targetItem = elementBelow?.closest('.initiative-item:not(.drag-placeholder):not(.dragging)');
             
-            if (targetItem && targetItem !== item) {
-                const targetIndex = Array.from(items).indexOf(targetItem);
-                if (targetIndex !== -1 && targetIndex !== index) {
-                    targetItem.classList.add('drag-over');
+            if (targetItem && dragPlaceholder) {
+                const container = targetItem.parentNode;
+                const targetRect = targetItem.getBoundingClientRect();
+                const touchY = touch.clientY;
+                
+                // Determine if we should insert before or after the target
+                const targetCenter = targetRect.top + targetRect.height / 2;
+                
+                if (touchY < targetCenter) {
+                    // Insert placeholder before target
+                    container.insertBefore(dragPlaceholder, targetItem);
+                } else {
+                    // Insert placeholder after target
+                    const nextSibling = targetItem.nextSibling;
+                    if (nextSibling) {
+                        container.insertBefore(dragPlaceholder, nextSibling);
+                    } else {
+                        container.appendChild(dragPlaceholder);
+                    }
                 }
             }
         }, { passive: false });
@@ -911,37 +954,76 @@ function setupDragAndDrop() {
                 return;
             }
             
-            const touch = e.changedTouches[0];
-            const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
-            const targetItem = elementBelow?.closest('.initiative-item');
-            
-            // Clean up
-            item.classList.remove('dragging');
-            items.forEach(i => i.classList.remove('drag-over'));
-            document.body.style.overflow = '';
-            
-            if (targetItem && targetItem !== item) {
-                const targetIndex = Array.from(items).indexOf(targetItem);
-                if (targetIndex !== -1 && targetIndex !== index) {
-                    reorderInitiativeList(draggedIndex, targetIndex);
+            // Get the final position from placeholder
+            let newIndex = -1;
+            if (dragPlaceholder && dragPlaceholder.parentNode) {
+                const allItems = Array.from(dragPlaceholder.parentNode.children);
+                newIndex = allItems.indexOf(dragPlaceholder);
+                
+                // Adjust index to account for the original item being removed
+                if (newIndex > draggedIndex) {
+                    newIndex--;
                 }
             }
             
-            draggedIndex = null;
-            touchStartElement = null;
-            isDragging = false;
+            // Clean up visual elements
+            cleanupDragState(item);
+            
+            // Apply the reorder if position changed
+            if (newIndex !== -1 && newIndex !== draggedIndex) {
+                reorderInitiativeList(draggedIndex, newIndex);
+            } else {
+                // If no valid drop, just re-render to restore original state
+                renderInitiativeOrder();
+            }
+            
+            resetDragVariables();
         }, { passive: true });
 
         item.addEventListener('touchcancel', (e) => {
-            // Clean up on touch cancel
-            item.classList.remove('dragging');
-            items.forEach(i => i.classList.remove('drag-over'));
-            document.body.style.overflow = '';
-            draggedIndex = null;
-            touchStartElement = null;
-            isDragging = false;
+            if (isDragging && touchStartElement === item) {
+                cleanupDragState(item);
+                renderInitiativeOrder(); // Restore original state
+            }
+            resetDragVariables();
         }, { passive: true });
     });
+}
+
+function updateDragPosition(touch) {
+    if (touchStartElement) {
+        const rect = touchStartElement.getBoundingClientRect();
+        touchStartElement.style.left = (touch.clientX - rect.width / 2) + 'px';
+        touchStartElement.style.top = (touch.clientY - rect.height / 2) + 'px';
+    }
+}
+
+function cleanupDragState(item) {
+    // Remove placeholder
+    if (dragPlaceholder && dragPlaceholder.parentNode) {
+        dragPlaceholder.parentNode.removeChild(dragPlaceholder);
+    }
+    
+    // Reset dragged item styles
+    item.classList.remove('dragging');
+    item.style.position = '';
+    item.style.zIndex = '';
+    item.style.pointerEvents = '';
+    item.style.width = '';
+    item.style.left = '';
+    item.style.top = '';
+    
+    // Restore scrolling
+    document.body.style.overflow = '';
+}
+
+function resetDragVariables() {
+    draggedIndex = null;
+    touchStartElement = null;
+    isDragging = false;
+    dragPlaceholder = null;
+    originalParent = null;
+    originalNextSibling = null;
 }
 
 function reorderInitiativeList(fromIndex, toIndex) {
