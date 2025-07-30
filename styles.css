@@ -26,11 +26,25 @@ body {
     z-index: auto;
     isolation: isolate;
     overflow-x: hidden; /* Prevent horizontal scrolling */
-    /* iOS safe area support */
+    /* iOS safe area support - enhanced for PWA standalone mode */
     padding-top: max(2rem, env(safe-area-inset-top) + 1rem);
     padding-bottom: max(2rem, env(safe-area-inset-bottom) + 1rem);
     padding-left: max(1rem, env(safe-area-inset-left));
     padding-right: max(1rem, env(safe-area-inset-right));
+}
+
+/* Enhanced iOS PWA standalone mode support */
+@media (display-mode: standalone) {
+    body {
+        /* Extra padding for standalone PWA mode to avoid notch overlap */
+        padding-top: max(2rem, env(safe-area-inset-top) + 2rem);
+        padding-bottom: max(2rem, env(safe-area-inset-bottom) + 1rem);
+    }
+    
+    /* Ensure proper spacing on iPhone with notch */
+    .app-header {
+        padding-top: max(1rem, env(safe-area-inset-top) + 0.5rem);
+    }
 }
 
 #app {
@@ -67,6 +81,10 @@ body {
     border-radius: 12px 12px 0 0;
     position: relative;
     z-index: 2;
+    /* iOS PWA safe area support for header */
+    padding-top: max(1rem, env(safe-area-inset-top) + 0.5rem);
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
 }
 
 .app-header h1 {
@@ -586,6 +604,20 @@ body {
     /* iOS keyboard handling */
     padding: 0 !important;
     margin: 0 !important;
+    /* iOS PWA standalone mode safe area */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}
+
+/* Enhanced modal positioning for iOS PWA standalone mode */
+@media (display-mode: standalone) {
+    .modal {
+        /* Additional safe padding for standalone PWA */
+        padding-top: max(env(safe-area-inset-top), 20px) !important;
+        padding-bottom: max(env(safe-area-inset-bottom), 20px) !important;
+    }
 }
 
 .modal-content {
@@ -1316,6 +1348,20 @@ body {
     /* iOS keyboard handling */
     padding: 0 !important;
     margin: 0 !important;
+    /* iOS PWA standalone mode safe area */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}
+
+/* Enhanced custom modal positioning for iOS PWA standalone mode */
+@media (display-mode: standalone) {
+    .custom-modal {
+        /* Additional safe padding for standalone PWA */
+        padding-top: max(env(safe-area-inset-top), 20px) !important;
+        padding-bottom: max(env(safe-area-inset-bottom), 20px) !important;
+    }
 }
 
 .custom-modal-content {
@@ -1335,8 +1381,7 @@ body {
     -webkit-transform: translateZ(0);
     will-change: transform;
     -webkit-overflow-scrolling: touch;
-    /* iOS keyboard handling */
-    padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+    /* Remove the safe area padding from modal content - it's handled by the modal container */
     /* Hide scrollbars but keep scrolling */
     scrollbar-width: none;
     -ms-overflow-style: none;
