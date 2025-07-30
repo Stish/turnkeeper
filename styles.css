@@ -576,14 +576,18 @@ body {
 }
 
 .char-name {
-    flex: 3;
+    flex: 1 1 auto !important;
+    min-width: 200px !important;
+    width: auto !important;
     padding: 0.5rem;
     border: 2px solid #e0e0e0;
     border-radius: 6px;
 }
 
 .char-init {
-    flex: 0 0 60px;
+    flex: 0 0 50px !important;
+    max-width: 50px !important;
+    width: 50px !important;
     padding: 0.5rem;
     border: 2px solid #e0e0e0;
     border-radius: 6px;
@@ -2211,12 +2215,16 @@ body.dark-theme .scroll-indicator::after {
     }
     
     .char-name {
-        flex: 3;
+        flex: 1 1 auto !important;
+        min-width: 150px !important;
+        width: auto !important;
         min-width: 0; /* Allow text truncation */
     }
     
     .char-init {
-        flex: 0 0 50px; /* Fixed narrow width for mobile */
+        flex: 0 0 40px !important;
+        max-width: 40px !important;
+        width: 40px !important;
         text-align: center;
     }
     
