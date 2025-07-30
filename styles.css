@@ -127,7 +127,7 @@ body {
     }
 
     .fullscreen-combat .main-content {
-        padding: 0;
+        padding: 1rem;
         margin: 0;
         height: 100%;
     }
@@ -148,7 +148,7 @@ body {
         justify-content: space-between;
         align-items: center;
         border-radius: 12px 12px 0 0;
-        margin: 0 1rem 0 1rem;
+        margin: 0;
         flex-shrink: 0;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         /* iOS PWA safe area support for combat controls */
@@ -175,7 +175,7 @@ body {
         padding: 1rem;
         background: white;
         border-radius: 0 0 12px 12px;
-        margin: 0 1rem 1rem 1rem;
+        margin: 0;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 }
@@ -998,7 +998,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem;
+    padding: 0.5rem;
     background: #f8f9fa;
     border-radius: 8px;
     border-left: 4px solid #e0e0e0;
@@ -1079,12 +1079,13 @@ body {
 .initiative-rank {
     background: linear-gradient(135deg, #64748b 0%, #475569 100%);
     color: white;
-    padding: 0.5rem;
+    padding: 0.375rem;
     border-radius: 50%;
     font-weight: bold;
-    min-width: 40px;
+    min-width: 35px;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
 }
 
 .character-info {
@@ -1096,7 +1097,7 @@ body {
 
 .character-name-combat {
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1110,7 +1111,7 @@ body {
 }
 
 .initiative-value {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: bold;
     color: #64748b;
 }
@@ -1546,6 +1547,21 @@ body {
 .author {
     color: #64748b;
     font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.build-info {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #6b7280;
+    text-align: center;
+}
+
+.build-date {
+    background: #f8fafc;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
     font-weight: 500;
 }
 

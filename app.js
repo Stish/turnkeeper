@@ -60,9 +60,23 @@ const confirmManualRolls = document.getElementById('confirmManualRolls');
 let editingPartyId = null;
 let combatParticipants = [];
 
+// Build timestamp function
+function initializeBuildTimestamp() {
+    const buildDateElement = document.getElementById('buildDate');
+    if (buildDateElement) {
+        // This timestamp will be updated manually when you make changes
+        // Format: YYYY-MM-DD HH:MM UTC
+        const buildTimestamp = '2025-07-30 16:23 UTC';
+        buildDateElement.textContent = `Last updated: ${buildTimestamp}`;
+    }
+}
+
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing app...');
+    
+    // Initialize build timestamp
+    initializeBuildTimestamp();
     
     // Debug: Check if elements exist
     console.log('newPartyBtn:', newPartyBtn);
