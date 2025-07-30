@@ -576,14 +576,14 @@ body {
 }
 
 .char-name {
-    flex: 1;
+    flex: 2;
     padding: 0.5rem;
     border: 2px solid #e0e0e0;
     border-radius: 6px;
 }
 
 .char-init {
-    flex: 2;
+    flex: 1;
     padding: 0.5rem;
     border: 2px solid #e0e0e0;
     border-radius: 6px;
@@ -707,7 +707,7 @@ body {
     background: white;
     color: #333;
     border: 1px solid #64748b;
-    width: 80px;
+    width: 45px;
 }
 
 .party-character-init.editable:focus {
@@ -834,6 +834,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .initiative-item {
@@ -869,9 +870,10 @@ body {
 
 .initiative-item.dragging {
     opacity: 0.5;
-    transform: rotate(2deg);
+    transform: rotate(2deg) scale(1.05);
     z-index: 1000;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .initiative-item.drag-over {
@@ -882,6 +884,11 @@ body {
 
 .initiative-item[draggable="true"] {
     cursor: grab;
+    /* Improve touch interaction */
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .initiative-item[draggable="true"]:active {
@@ -2204,12 +2211,12 @@ body.dark-theme .scroll-indicator::after {
     }
     
     .char-name {
-        flex: 1;
+        flex: 2;
         min-width: 0; /* Allow text truncation */
     }
     
     .char-init {
-        flex: 2; /* Larger init input */
+        flex: 1; /* Smaller init input */
         text-align: center;
     }
     
@@ -2277,7 +2284,7 @@ body.dark-theme .scroll-indicator::after {
     .party-character-init {
         padding: 0.5rem;
         font-size: 0.9rem;
-        width: 60px;
+        width: 35px;
         text-align: center;
         flex: 0 0 auto;
     }

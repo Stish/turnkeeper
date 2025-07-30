@@ -813,11 +813,15 @@ function renderInitiativeOrder() {
 }
 
 let draggedIndex = null;
+let touchStartY = 0;
+let touchStartElement = null;
+let isDragging = false;
 
 function setupDragAndDrop() {
     const items = initiativeOrder.querySelectorAll('.initiative-item');
     
     items.forEach((item, index) => {
+        // Desktop drag and drop events
         item.addEventListener('dragstart', (e) => {
             draggedIndex = index;
             item.classList.add('dragging');
@@ -859,6 +863,84 @@ function setupDragAndDrop() {
             }
             draggedIndex = null;
         });
+
+        // Touch events for mobile devices
+        item.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+            touchStartElement = item;
+            draggedIndex = index;
+            isDragging = false;
+            
+            // Add a slight delay before considering it a drag
+            setTimeout(() => {
+                if (touchStartElement === item) {
+                    isDragging = true;
+                    item.classList.add('dragging');
+                    // Prevent scrolling while dragging
+                    document.body.style.overflow = 'hidden';
+                }
+            }, 200);
+        }, { passive: true });
+
+        item.addEventListener('touchmove', (e) => {
+            if (!isDragging || touchStartElement !== item) return;
+            
+            e.preventDefault();
+            const touch = e.touches[0];
+            const currentY = touch.clientY;
+            
+            // Remove existing drag-over classes
+            items.forEach(i => i.classList.remove('drag-over'));
+            
+            // Find the element we're hovering over
+            const elementBelow = document.elementFromPoint(touch.clientX, currentY);
+            const targetItem = elementBelow?.closest('.initiative-item');
+            
+            if (targetItem && targetItem !== item) {
+                const targetIndex = Array.from(items).indexOf(targetItem);
+                if (targetIndex !== -1 && targetIndex !== index) {
+                    targetItem.classList.add('drag-over');
+                }
+            }
+        }, { passive: false });
+
+        item.addEventListener('touchend', (e) => {
+            if (!isDragging || touchStartElement !== item) {
+                touchStartElement = null;
+                isDragging = false;
+                return;
+            }
+            
+            const touch = e.changedTouches[0];
+            const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+            const targetItem = elementBelow?.closest('.initiative-item');
+            
+            // Clean up
+            item.classList.remove('dragging');
+            items.forEach(i => i.classList.remove('drag-over'));
+            document.body.style.overflow = '';
+            
+            if (targetItem && targetItem !== item) {
+                const targetIndex = Array.from(items).indexOf(targetItem);
+                if (targetIndex !== -1 && targetIndex !== index) {
+                    reorderInitiativeList(draggedIndex, targetIndex);
+                }
+            }
+            
+            draggedIndex = null;
+            touchStartElement = null;
+            isDragging = false;
+        }, { passive: true });
+
+        item.addEventListener('touchcancel', (e) => {
+            // Clean up on touch cancel
+            item.classList.remove('dragging');
+            items.forEach(i => i.classList.remove('drag-over'));
+            document.body.style.overflow = '';
+            draggedIndex = null;
+            touchStartElement = null;
+            isDragging = false;
+        }, { passive: true });
     });
 }
 
