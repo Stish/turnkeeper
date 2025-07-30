@@ -576,14 +576,14 @@ body {
 }
 
 .char-name {
-    flex: 2;
+    flex: 3;
     padding: 0.5rem;
     border: 2px solid #e0e0e0;
     border-radius: 6px;
 }
 
 .char-init {
-    flex: 1;
+    flex: 0 0 60px;
     padding: 0.5rem;
     border: 2px solid #e0e0e0;
     border-radius: 6px;
@@ -2211,12 +2211,12 @@ body.dark-theme .scroll-indicator::after {
     }
     
     .char-name {
-        flex: 2;
+        flex: 3;
         min-width: 0; /* Allow text truncation */
     }
     
     .char-init {
-        flex: 1; /* Smaller init input */
+        flex: 0 0 50px; /* Fixed narrow width for mobile */
         text-align: center;
     }
     
