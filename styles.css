@@ -113,7 +113,11 @@ body {
     }
 
     .fullscreen-combat {
+        /* iOS PWA safe area support for fullscreen body - match main app header */
         padding: 1rem !important;
+        padding-top: max(1rem, env(safe-area-inset-top) + 1rem) !important;
+        padding-left: max(1rem, env(safe-area-inset-left)) !important;
+        padding-right: max(1rem, env(safe-area-inset-right)) !important;
         background: white;
     }
 
@@ -151,10 +155,7 @@ body {
         margin: 0;
         flex-shrink: 0;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        /* iOS PWA safe area support for combat controls */
-        padding-top: max(1rem, env(safe-area-inset-top) + 1rem);
-        padding-left: max(1rem, env(safe-area-inset-left));
-        padding-right: max(1rem, env(safe-area-inset-right));
+        /* Safe area now handled by parent .fullscreen-combat container */
     }
 
     .fullscreen-combat .combat-controls .primary-btn,

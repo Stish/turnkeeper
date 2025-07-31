@@ -66,7 +66,7 @@ function initializeBuildTimestamp() {
     if (buildDateElement) {
         // This timestamp will be updated manually when you make changes
         // Format: YYYY-MM-DD HH:MM UTC
-        const buildTimestamp = '2025-07-30 18:15 UTC';
+        const buildTimestamp = '2025-07-31 08:00 UTC';
         buildDateElement.textContent = `Last updated: ${buildTimestamp}`;
     }
 }
