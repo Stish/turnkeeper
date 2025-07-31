@@ -789,6 +789,7 @@ body {
     align-items: center;
     transition: all 0.3s ease;
     width: 100%;
+    min-height: 4rem; /* Ensure consistent height for both PC and NPC items */
 }
 
 .party-character-item:hover {
@@ -841,6 +842,8 @@ body {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    min-height: 1.5rem; /* Ensure consistent height */
+    line-height: 1.2; /* Match text line height */
 }
 
 .party-character-name.editable:focus {
@@ -865,6 +868,14 @@ body {
     color: #333;
     border: 1px solid #64748b;
     width: 45px;
+    padding: 0.25rem 0.75rem; /* Match static version padding */
+    border-radius: 12px; /* Match static version border radius */
+    font-size: 0.9rem; /* Match static version font size */
+    font-weight: 500; /* Match static version font weight */
+    min-width: 60px; /* Match static version min-width */
+    text-align: center; /* Match static version text alignment */
+    min-height: 1.5rem; /* Ensure consistent height */
+    line-height: 1.2; /* Match text line height */
 }
 
 .party-character-init.editable:focus {
@@ -1016,6 +1027,7 @@ body {
     max-width: 100%; /* Ensure it doesn't exceed container */
     overflow: hidden; /* Prevent any child overflow */
     box-sizing: border-box;
+    min-height: 4rem; /* Match combat participants height */
 }
 
 .initiative-item:hover {
