@@ -2490,7 +2490,7 @@ body.dark-theme .scroll-indicator::after {
         justify-content: space-between;
         gap: 0.5rem;
         padding: 0.5rem 0.75rem;
-        min-height: auto;
+        min-height: 4rem; /* Maintain consistent height on mobile */
     }
     
     .character-info-section {
@@ -2562,7 +2562,7 @@ body.dark-theme .scroll-indicator::after {
         align-items: center;
         gap: 0.5rem;
         padding: 0.5rem 0.75rem;
-        min-height: auto;
+        min-height: 4rem; /* Maintain consistent height on mobile */
     }
     
     .initiative-info {
